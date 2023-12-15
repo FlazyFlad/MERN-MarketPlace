@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "name": "Product 1",
+        "category": "Electronics",
+        "price": 49.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-1",
+        "websiteFriendly": "Product 1 Website"
+    },
+    {
+        "id": 2,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 3,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 59.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 4,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 5,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 6,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 7,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 8,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 9,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 10,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 11,
+        "name": "Product 2",
+        "category": "Clothing",
+        "price": 29.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-2",
+        "websiteFriendly": "Product 2 Website"
+    },
+    {
+        "id": 20,
+        "name": "Product 20",
+        "category": "Home and Kitchen",
+        "price": 79.99,
+        "image": "https://example.com/product-image.jpg",
+        "website": "https://example.com/product-20",
+        "websiteFriendly": "Product 20 Website"
+    }
+]

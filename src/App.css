@@ -1,38 +1,38 @@
-.App {
-  text-align: center;
+/* You can add global styles to this file, and also import other style files */
+body{
+  margin: 0 auto;
+  padding: 0;
+  font-family: "Montserrat", sans-serif !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Themes start */
+
+.dark-section {
+  background-color: #000000; /* Цвет фона темных секций */
+  color: #fff; /* Цвет текста в темных секциях */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.dark-background {
+  background-color: #181818; /* Цвет заднего фона в темной теме */
+  color: #fff; /* Цвет текста на темном заднем фоне */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dark-text {
+  color: white; /* Цвет текста в темных секциях */
 }
 
-.App-link {
-  color: #61dafb;
+.light-section {
+  background-color: #fff; /* Цвет фона светлых секций */
+  color: #000000; /* Цвет текста в светлых секциях */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.light-background {
+  background-color: #f4f4f4; /* Цвет заднего фона в светлой теме */
+  color: #000000; /* Цвет текста на светлом заднем фоне */
 }
+
+.light-text {
+  color: #141414; /* Цвет текста в светлых секциях */
+}
+
+/* Themes end */

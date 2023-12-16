@@ -5,7 +5,7 @@ import { ThemeContext } from '../../Context';
 
 
 const ProductList = () => {
-    const { theme, handleChangeTheme } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     const productList = JSON.parse(JSON.stringify(productData))
 
     return (

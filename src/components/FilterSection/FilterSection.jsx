@@ -96,6 +96,7 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
   return (
     <div className={`${theme ? 'dark-section' : 'light-section'} p-4 rounded-2xl`}>
       <div className="filter-section">
+        <h2 className='font-bold text-lg'>Search by Name</h2>
         <div className="flex border-2 items-center rounded-2xl bg-gray-200 w-full">
           <div className="ml-2">
             <FaSearch className="text-gray-500 w-5 h-5" />

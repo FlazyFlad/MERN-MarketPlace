@@ -35,4 +35,16 @@ body{
   color: #141414; /* Цвет текста в светлых секциях */
 }
 
+/* Style for autofill */
+.dark-background:-webkit-autofill,
+.light-background:-webkit-autofill {
+  box-shadow: 0 0 0 30px #181818 inset; /* Adjust the color and inset shadow for dark theme */
+  -webkit-text-fill-color: #fff; /* Set text color for autofill in dark theme */
+}
+
+.light-background:-webkit-autofill {
+  box-shadow: 0 0 0 30px #f4f4f4 inset; /* Adjust the color and inset shadow for light theme */
+  -webkit-text-fill-color: #000; /* Set text color for autofill in light theme */
+}
+
 /* Themes end */

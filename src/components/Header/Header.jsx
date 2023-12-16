@@ -33,8 +33,8 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${theme ? 'dark-text' : 'light-text'}`}>
-                                Contact Us
+                            <Link to="/register" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                                Sign up
                             </Link>
                         </li>
                         <li>

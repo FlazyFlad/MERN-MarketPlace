@@ -6,6 +6,8 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import Header from './components/Header/Header';
 import ProductList from './components/ProductList/ProductLIst';
 import Catalog from './components/Catalog/Catalog';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
 
 function App() {
   const [theme, setTheme] = useState(true);
@@ -23,8 +25,9 @@ function App() {
           <div className={`app-spacer ${theme ? 'dark-background' : 'light-background'}`}>
             <Routes>
               <Route path="*" element={<NotFoundPage />} />
-
-              <Route path="catalog" element={<Catalog />} />
+              <Route path="/register" element={<Register />}/>
+              <Route path="/login" element={<Login />}/>
+              <Route path="/catalog" element={<Catalog />} />
             </Routes>
           </div>
         </div>

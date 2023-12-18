@@ -9,6 +9,7 @@ import Catalog from './components/Catalog/Catalog';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import { useDispatch, useSelector } from 'react-redux';
+import AuthModal from './components/AuthModal/AuthModal';
 
 function App() {
   const [theme, setTheme] = useState(true);
@@ -19,13 +20,13 @@ function App() {
     setTheme(prevTheme => !prevTheme);
   };
 
-
   return (
     <>
       <ThemeContext.Provider value={{ theme, handleChangeTheme }}>
         <div className={`app-container ${theme ? 'dark-background' : 'light-background'}`}>
         <div className={`${isCartNavOpen ? 'cover' : ''}`}></div>
           <Header />
+          <AuthModal />
           <div className={`app-spacer ${theme ? 'dark-background' : 'light-background'} overlay ${isCartNavOpen ? 'open' : ''}`}  style={{ display: 'block' }}>
             <Routes>
               <Route path="*" element={<NotFoundPage />} />

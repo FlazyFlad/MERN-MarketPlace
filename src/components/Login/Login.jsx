@@ -46,7 +46,7 @@ const Login = () => {
                         >
                             <i className="fa-solid fa-exclamation"></i>
                         </span>
-                        {error}
+                        {JSON.stringify(error)}
                     </div>
                 )}
 

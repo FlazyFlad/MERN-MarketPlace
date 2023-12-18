@@ -9,7 +9,6 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { fetchProducts } from '../../actions/productActions';
 
 const Catalog = () => {
-    const { theme } = useContext(ThemeContext);
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products);
     const [isLoading, setIsLoading] = useState(true);
@@ -27,20 +26,21 @@ const Catalog = () => {
 
     useEffect(() => {
         dispatch(fetchProducts())
-          .then(() => {
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            console.error('Error fetching car data:', error);
-            setIsLoading(false);
-          });
-      }, [dispatch]);
+            .then(() => {
+                setIsLoading(false); // Set isLoading to false after products are fetched
+            })
+            .catch((error) => {
+                console.error('Error fetching car data:', error);
+                setIsLoading(false); // Set isLoading to false in case of an error
+            });
+    }, [dispatch]);
 
-    console.log(filteresProducts)
+    useEffect(() => {
+        setFilteredProducts(products);
+    }, [products]);
 
     const handleFilterChange = (filters, callback) => {
         const { models, priceRange, searchInput } = filters;
-
 
         const updatedFilteredProducts = products.filter((product) => {
             const passesModelFilter = models?.length === 0 || models?.includes(product?.CategoryID.Name);
@@ -59,51 +59,52 @@ const Catalog = () => {
         setFilteredProducts(updatedFilteredProducts, callback);
     };
 
+
     const handleFilterPageChange = () => {
         setCurrentPage(1);
     };
 
-    if (isLoading) {
-        return (
-            <LoadingSpinner />
-        );
-    }
 
     return (
         <>
-            <div className="icons-section">
-                <div className="left-icons">
-                    <i className="icon">Icon for 3 items per row</i>
-                    <i className="icon">Icon for 4 items per row</i>
-                    <button> asdfasd</button>
-                </div>
+            {!isLoading ? (
+                <>
+                    <div className="icons-section">
+                        <div className="left-icons">
+                            <i className="icon">Icon for 3 items per row</i>
+                            <i className="icon">Icon for 4 items per row</i>
+                            <button> asdfasd</button>
+                        </div>
 
-                <div className="right-icons">
-                    <i className="fas fa-heart"></i>
-                    <i className="fas fa-shopping-cart" onClick={(handleToggleCartNav)}></i>
-                </div>
-            </div>
-            <div className="content-section">
-                <div className="products-list">
-                    <ProductList filteresProducts = {filteresProducts}/>
-                </div>
-
-                <div className="filtering-section">
-                    <div>
-                        <FilterSection
-                            onFilterChange={handleFilterChange}
-                            modelsData={products?.map((product) => product?.CategoryID.Name)}
-                            fuelsData={['Gasoline', 'Electric', 'Hybrid', 'Diesel']}
-                            maxPrice={maxPrice}
-                            minPrice={minPrice}
-                            onFilterPageChange={handleFilterPageChange}
-                        />
+                        <div className="right-icons">
+                            <i className="fas fa-heart"></i>
+                            <i className="fas fa-shopping-cart" onClick={(handleToggleCartNav)}></i>
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <div className="content-section">
+                        <div className="products-list">
+                            <ProductList filteresProducts={filteresProducts} />
+                        </div>
 
+                        <div className="filtering-section">
+                            <div>
+                                <FilterSection
+                                    onFilterChange={handleFilterChange}
+                                    modelsData={products?.map((product) => product?.CategoryID?.Name)}
+                                    fuelsData={['Gasoline', 'Electric', 'Hybrid', 'Diesel']}
+                                    maxPrice={maxPrice}
+                                    minPrice={minPrice}
+                                    onFilterPageChange={handleFilterPageChange}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <LoadingSpinner />
+            )}
         </>
-    );
+    )
 }
 
 export default Catalog;

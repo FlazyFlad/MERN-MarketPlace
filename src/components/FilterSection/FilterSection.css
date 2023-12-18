@@ -7,16 +7,6 @@
     align-items: center;
 }
 
-/* .filter-bar button {
-    background-color: #FFC107;
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-} */
-
 .filter-section {
     margin-bottom: 20px;
 }
@@ -50,7 +40,7 @@
 }
 
 .apply-button {
-    background-color: #FFC107;
+    background-color: #3498db;
     color: white;
 }
 

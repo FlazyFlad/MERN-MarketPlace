@@ -10,7 +10,7 @@ export const CHANGE_QUANTITY_FAILURE = 'CHANGE_QUANTITY_FAILURE';
 export const CLEAR_CART_SUCCESS = 'CLEAR_CART_SUCCESS';
 export const CLEAR_CART_FAILURE = 'CLEAR_CART_FAILURE';
 
-const baseUrl = 'http://127.0.0.1:3001';
+const baseUrl = process.env.REACT_APP_API_URL;
 
 export const FETCH_USER_CART_REQUEST = 'FETCH_USER_CART_REQUEST';
 export const FETCH_USER_CART_SUCCESS = 'FETCH_USER_CART_SUCCESS';
@@ -57,7 +57,6 @@ export const clearCartFailure = (error) => ({
     type: CLEAR_CART_FAILURE,
     payload: error,
 });
-
 
 export const addToCart = (ProductID, Quantity) => async (dispatch, getState) => {
     try {

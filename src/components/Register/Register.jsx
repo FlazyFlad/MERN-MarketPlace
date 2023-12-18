@@ -45,7 +45,7 @@ const Register = () => {
                         >
                             <i className="fa-solid fa-exclamation"></i>
                         </span>
-                        {error}
+                        {JSON.stringify(error)}
                     </div>
                 )}
                 <form id="register-form" className="form" onSubmit={handleRegister}>

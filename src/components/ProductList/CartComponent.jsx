@@ -10,7 +10,6 @@ const CartComponent = ({ cartItems, sideNav, clearCart, buy }) => {
     const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
     const dispatch = useDispatch();
 
-
     return (
         <div className="cart">
             <div className={`side-nav${isCartNavOpen ? '-open' : ''}`}>

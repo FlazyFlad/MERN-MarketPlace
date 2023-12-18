@@ -1,9 +1,8 @@
-// authReducer.js
-
 const initialState = {
     isAuthenticated: false,
     token: null,
     error: null,
+    userInfo: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -43,6 +42,19 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: null,
+            };
+        case 'GET_USER_INFO_SUCCESS':
+            return {
+                ...state,
+                userInfo: action.payload,
+                error: null,
+            };
+
+        case 'GET_USER_INFO_FAILURE':
+            return {
+                ...state,
+                userInfo: null,
+                error: action.payload,
             };
         default:
             return state;

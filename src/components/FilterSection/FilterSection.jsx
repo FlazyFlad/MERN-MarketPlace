@@ -4,28 +4,22 @@ import './FilterSection.css';
 import { ThemeContext } from '../../Context';
 import { FaSearch } from "react-icons/fa";
 
-const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPrice, minMileage, maxMileage, onFilterPageChange }) => {
+const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPrice, onFilterPageChange }) => {
   const { theme } = useContext(ThemeContext);
   const [selectedModelOptions, setSelectedModelOptions] = useState([]);
   const [selectedFuelOptions, setSelectedFuelOptions] = useState([]);
   const [resetSliders, setResetSliders] = useState(false);
-  const [selectedPriceRange, setSelectedPriceRange] = useState({ min: minMileage, max: maxPrice });
-  const [selectedMileageRange, setSelectedMileageRange] = useState({ min: maxMileage, max: maxMileage });
+  const [selectedPriceRange, setSelectedPriceRange] = useState({ min: minPrice, max: maxPrice });
   const [searchInput, setSearchInput] = useState('');
 
 
 
   useEffect(() => {
     setSelectedPriceRange({ min: minPrice, max: maxPrice });
-    setSelectedMileageRange({ min: minMileage, max: maxMileage });
-  }, [maxPrice, maxMileage]);
+  }, [maxPrice]);
 
   const handlePriceChange = (value) => {
     setSelectedPriceRange(value);
-  };
-
-  const handleMileageChange = (value) => {
-    setSelectedMileageRange(value);
   };
 
   const handleSearchInputChange = (event) => {
@@ -36,9 +30,7 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
   const handleApplyFilters = () => {
     const filters = {
       models: selectedModelOptions,
-      fuels: selectedFuelOptions,
       priceRange: selectedPriceRange,
-      mileageRange: selectedMileageRange,
       searchInput: searchInput,
     };
     onFilterChange(filters);
@@ -47,9 +39,7 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
 
   const handleResetFilters = () => {
     setSelectedModelOptions([]);
-    setSelectedFuelOptions([]);
     setSelectedPriceRange({ min: minPrice, max: maxPrice });
-    setSelectedMileageRange({ min: minMileage, max: maxMileage });
     setResetSliders(true);
     setSearchInput('');
 
@@ -57,7 +47,6 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
       models: [],
       fuels: [],
       priceRange: { min: minPrice, max: maxPrice },
-      mileageRange: { min: minMileage, max: maxMileage },
       searchInput: '',
     };
 
@@ -105,22 +94,16 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
             className="flex-grow text-black text-sm p-2 bg-gray-200 border-none rounded-2xl focus:outline-none focus:border-transparent w-full"
             type="text"
             placeholder="Enter the name"
+            value={searchInput}
+            onChange={handleSearchInputChange}
           />
-
         </div>
       </div>
 
       <div className="filter-section">
-        <h2 className='font-bold text-lg'>Filter by model</h2>
+        <h2 className='font-bold text-lg'>Filter by Category</h2>
         <div className="checkbox-container">
           {renderCheckboxOptions(modelsData, selectedModelOptions, setSelectedModelOptions)}
-        </div>
-      </div>
-
-      <div className="filter-section">
-        <h2 className='font-bold text-lg'>Filter by fuel</h2>
-        <div className="checkbox-container">
-          {renderCheckboxOptions(fuelsData, selectedFuelOptions, setSelectedFuelOptions)}
         </div>
       </div>
 
@@ -137,19 +120,6 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
         </div>
       </div>
 
-      {/*<div className="flex flex-col">
-            <h2 className='font-bold text-lg mb-4'>Filter by mileage</h2>
-              <div className="flex flex-start mb-8">
-                  <DualSlider
-                    min={minMileage}
-                    max={maxMileage}
-                    onChange={handleMileageChange}
-                    sliderType="mileage"
-                    reset={resetSliders}
-                  />
-              </div>
-          </div>
-*/}
       <div className="combined-button">
         <button className="reset-button" onClick={handleResetFilters}>
           Reset

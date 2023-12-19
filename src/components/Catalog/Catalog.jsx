@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../Context';
-import { toggleCartNav } from '../../actions/CartActions';
+import { toggleCartNav } from '../../actions/cartActions';
 import FilterSection from '../FilterSection/FilterSection';
 import ProductList from '../ProductList/ProductLIst';
 import './Catalog.css';

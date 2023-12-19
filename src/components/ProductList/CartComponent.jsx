@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import "./CartComponent.css"
 import { useDispatch, useSelector } from "react-redux";
-import { changeQuantity, toggleCartNav, clearCart, removeItem } from "../../actions/CartActions";
+import { changeQuantity, toggleCartNav, clearCart, removeItem } from "../../actions/cartActions";
 import Total from "./Total";
 import CartItem from "./CartItem";
 import { ThemeContext } from "../../Context";

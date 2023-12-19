@@ -1,11 +1,10 @@
 import "./ProductList.css";
 import React, { useContext, useEffect, useState } from "react";
-import productData from "../../ProductsData.json";
 import { ThemeContext } from "../../Context";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../actions/productActions";
 import CartComponent from "./CartComponent";
-import { addToCart, fetchUserCart } from "../../actions/CartActions";
+import { addToCart, fetchUserCart } from "../../actions/cartActions";
 
 const ProductList = ({ filteresProducts }) => {
     const { theme } = useContext(ThemeContext);

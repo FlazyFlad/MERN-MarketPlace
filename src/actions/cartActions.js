@@ -7,10 +7,12 @@ export const REMOVE_FROM_CART_SUCCESS = 'REMOVE_FROM_CART_SUCCESS';
 export const REMOVE_FROM_CART_FAILURE = 'REMOVE_FROM_CART_FAILURE';
 export const CHANGE_QUANTITY_SUCCESS = 'CHANGE_QUANTITY_SUCCESS';
 export const CHANGE_QUANTITY_FAILURE = 'CHANGE_QUANTITY_FAILURE';
+export const CHANGE_QUANTITY_REQUEST = 'CHANGE_QUANTITY_REQUEST';
 export const CLEAR_CART_SUCCESS = 'CLEAR_CART_SUCCESS';
 export const CLEAR_CART_FAILURE = 'CLEAR_CART_FAILURE';
 
 const baseUrl = process.env.REACT_APP_API_URL;
+// const baseUrl = 'http://127.0.0.1:3001';
 
 export const FETCH_USER_CART_REQUEST = 'FETCH_USER_CART_REQUEST';
 export const FETCH_USER_CART_SUCCESS = 'FETCH_USER_CART_SUCCESS';
@@ -39,9 +41,12 @@ export const removeFromCartFailure = (error) => ({
     payload: error,
 });
 
-export const changeQuantitySuccess = (cartItem) => ({
+export const changeQuantityRequest = () => ({
+    type: CHANGE_QUANTITY_REQUEST,
+});
+
+export const changeQuantitySuccess = () => ({
     type: CHANGE_QUANTITY_SUCCESS,
-    payload: cartItem,
 });
 
 export const changeQuantityFailure = (error) => ({
@@ -71,12 +76,37 @@ export const addToCart = (ProductID, Quantity) => async (dispatch, getState) => 
             ProductID,
             Quantity,
         });
-
+        dispatch(fetchUserCart());
         dispatch(addToCartSuccess(response.data));
     } catch (error) {
         dispatch(addToCartFailure(error));
     }
 };
+
+export const changeQuantity = (ProductID, NewQuantity) => async (dispatch, getState) => {
+    dispatch(changeQuantityRequest());
+
+    try {
+        await dispatch(getUserInfo());
+
+        const { userInfo } = getState().auth;
+
+        const UserID = userInfo.user._id;
+
+        await axios.post(`${baseUrl}/cart/change-quantity`, {
+            UserID,
+            ProductID,
+            NewQuantity,
+        });
+        dispatch(fetchUserCart());
+
+        dispatch(changeQuantitySuccess());
+        dispatch(fetchUserCart());
+    } catch (error) {
+        dispatch(changeQuantityFailure(error.message));
+    }
+};
+
 
 export const fetchUserCart = () => async (dispatch, getState) => {
     try {
@@ -95,7 +125,6 @@ export const fetchUserCart = () => async (dispatch, getState) => {
             payload: response.data,
         });
     } catch (error) {
-        console.error('Error fetching user cart:', error);
         dispatch({
             type: FETCH_USER_CART_FAILURE,
             payload: error.message,
@@ -104,38 +133,45 @@ export const fetchUserCart = () => async (dispatch, getState) => {
 };
 
 
-// Async action creators
-export const removeFromCart = (cartItem) => async (dispatch) => {
-    try {
-        // Make an API call to remove the product from the cart
-        const response = await axios.post(`${baseUrl}/cart/remove`, cartItem);
+export const clearCart = () => async (dispatch, getState) => {
+    dispatch(changeQuantityRequest());
 
-        dispatch(removeFromCartSuccess(response.data));
+    try {
+        await dispatch(getUserInfo());
+
+        const { userInfo } = getState().auth;
+
+        const UserID = userInfo.user._id;
+
+        await axios.post(`${baseUrl}/cart/clear-cart`, {
+            UserID,
+        });        
+        dispatch(fetchUserCart());
+
+        dispatch(changeQuantitySuccess());
     } catch (error) {
-        dispatch(removeFromCartFailure(error));
+        dispatch(changeQuantityFailure(error.message));
     }
 };
 
-export const changeQuantity = (cartItem) => async (dispatch) => {
-    try {
-        // Make an API call to change the quantity of the product in the cart
-        const response = await axios.post(`${baseUrl}/cart/changeQuantity`, cartItem);
+export const removeItem = (ProductID) => async (dispatch, getState) => {
+    dispatch(changeQuantityRequest());
 
-        dispatch(changeQuantitySuccess(response.data));
+    try {
+        await dispatch(getUserInfo());
+
+        const { userInfo } = getState().auth;
+
+        const UserID = userInfo.user._id;
+
+        await axios.post(`${baseUrl}/cart/remove-item`, {
+            UserID,
+            ProductID,
+        });
+        dispatch(fetchUserCart());
+
+        dispatch(changeQuantitySuccess());
     } catch (error) {
-        dispatch(changeQuantityFailure(error));
+        dispatch(changeQuantityFailure(error.message));
     }
 };
-
-export const clearCart = () => async (dispatch) => {
-    try {
-        // Make an API call to clear the entire cart
-        await axios.post(`${baseUrl}/cart/clear`);
-
-        dispatch(clearCartSuccess());
-    } catch (error) {
-        dispatch(clearCartFailure(error));
-    }
-};
-
-// Implement similar action creators for remove, change quantity, and clear cart

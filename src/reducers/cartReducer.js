@@ -55,7 +55,9 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cartItems: state.cartItems.map((item) =>
-                    item.id === action.payload.id ? action.payload : item
+                    item.productID === action.payload.productID
+                        ? { ...item, quantity: action.payload.quantity }
+                        : item
                 ),
                 error: null,
             };

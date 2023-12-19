@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../Context';
-import { toggleCartNav } from '../../actions/cartActions';
+import { toggleCartNav } from '../../actions/CartActions';
 import FilterSection from '../FilterSection/FilterSection';
 import ProductList from '../ProductList/ProductLIst';
 import './Catalog.css';
@@ -11,6 +11,7 @@ import { fetchProducts } from '../../actions/productActions';
 const Catalog = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products);
+    const cartItems = useSelector((state) => state.cart.cartItems);
     const [isLoading, setIsLoading] = useState(true);
 
     const handleToggleCartNav = () => {
@@ -27,11 +28,11 @@ const Catalog = () => {
     useEffect(() => {
         dispatch(fetchProducts())
             .then(() => {
-                setIsLoading(false); // Set isLoading to false after products are fetched
+                setIsLoading(false)
             })
             .catch((error) => {
                 console.error('Error fetching car data:', error);
-                setIsLoading(false); // Set isLoading to false in case of an error
+                setIsLoading(false);
             });
     }, [dispatch]);
 
@@ -40,21 +41,29 @@ const Catalog = () => {
     }, [products]);
 
     const handleFilterChange = (filters, callback) => {
-        const { models, priceRange, searchInput } = filters;
+        const { models, categories, priceRange, searchInput } = filters;
 
-        const updatedFilteredProducts = products.filter((product) => {
-            const passesModelFilter = models?.length === 0 || models?.includes(product?.CategoryID.Name);
-            const passesPriceFilter =
-                product?.Price >= priceRange?.min && product?.Price <= priceRange?.max;
-            const passesSearchFilter =
-                !searchInput || new RegExp(searchInput, 'i').test(product?.Name);
+        const updatedFilteredProducts = products
+            .filter((product) => {
+                const passesCategoryModel =
+                    categories?.length === 0 ||
+                    categories?.includes(product?.CategoryID?.Name);
+                const passesPriceFilter =
+                    product?.Price >= priceRange?.min &&
+                    product?.Price <= priceRange?.max;
+                const passesSearchFilter =
+                    !searchInput || new RegExp(searchInput, 'i').test(product?.Name);
+                const passesModelFilter =
+                    models.length === 0 ||
+                    models.includes(product?.ModelID?.Name);
 
-            return (
-                passesModelFilter &&
-                passesPriceFilter &&
-                passesSearchFilter
-            );
-        });
+                return (
+                    passesCategoryModel &&
+                    passesPriceFilter &&
+                    passesSearchFilter &&
+                    passesModelFilter
+                );
+            })
 
         setFilteredProducts(updatedFilteredProducts, callback);
     };
@@ -64,6 +73,17 @@ const Catalog = () => {
         setCurrentPage(1);
     };
 
+    const calculateTotalQuantity = () => {
+        let totalQuantity = 0;
+
+        cartItems.forEach((cartItem) => {
+            totalQuantity += cartItem.Quantity;
+        });
+
+        return totalQuantity;
+    };
+
+    const totalQuantity = calculateTotalQuantity();
 
     return (
         <>
@@ -77,8 +97,18 @@ const Catalog = () => {
                         </div>
 
                         <div className="right-icons">
-                            <i className="fas fa-heart"></i>
-                            <i className="fas fa-shopping-cart" onClick={(handleToggleCartNav)}></i>
+                            <div className="s-nav" style={{ marginRight: "5px" }}>
+                                <i onClick={(handleToggleCartNav)} className={`s-icon fas fa-heart`}></i>
+                                {totalQuantity > 0 &&
+                                    <span className="s-total-qty">{totalQuantity ? totalQuantity : ''}</span>
+                                }
+                            </div>
+                            <div className="s-nav">
+                                <i onClick={(handleToggleCartNav)} className="s-icon fas fa-shopping-cart"></i>
+                                {totalQuantity > 0 &&
+                                    <span className="s-total-qty">{totalQuantity ? totalQuantity : ''}</span>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="content-section">
@@ -90,8 +120,8 @@ const Catalog = () => {
                             <div>
                                 <FilterSection
                                     onFilterChange={handleFilterChange}
-                                    modelsData={products?.map((product) => product?.CategoryID?.Name)}
-                                    fuelsData={['Gasoline', 'Electric', 'Hybrid', 'Diesel']}
+                                    categoriesData={products?.map((product) => product?.CategoryID?.Name)}
+                                    modelsData={[...new Set(products?.map((product) => product?.ModelID?.Name))]}
                                     maxPrice={maxPrice}
                                     minPrice={minPrice}
                                     onFilterPageChange={handleFilterPageChange}

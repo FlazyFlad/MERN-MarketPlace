@@ -4,11 +4,11 @@ import './FilterSection.css';
 import { ThemeContext } from '../../Context';
 import { FaSearch } from "react-icons/fa";
 
-const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPrice, onFilterPageChange }) => {
+const FilterSection = ({ onFilterChange, categoriesData, modelsData, maxPrice, minPrice, onFilterPageChange }) => {
   const { theme } = useContext(ThemeContext);
-  const [selectedModelOptions, setSelectedModelOptions] = useState([]);
-  const [selectedFuelOptions, setSelectedFuelOptions] = useState([]);
+  const [selectedCategoryOptions, setselectedCategoryOptions] = useState([]);
   const [resetSliders, setResetSliders] = useState(false);
+  const [selectedModelsOptions, setSelectedModelsOptions] = useState([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState({ min: minPrice, max: maxPrice });
   const [searchInput, setSearchInput] = useState('');
 
@@ -29,7 +29,8 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
 
   const handleApplyFilters = () => {
     const filters = {
-      models: selectedModelOptions,
+      models: selectedModelsOptions,
+      categories: selectedCategoryOptions,
       priceRange: selectedPriceRange,
       searchInput: searchInput,
     };
@@ -38,14 +39,15 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
   };
 
   const handleResetFilters = () => {
-    setSelectedModelOptions([]);
+    setselectedCategoryOptions([]);
+    setSelectedModelsOptions([]);
     setSelectedPriceRange({ min: minPrice, max: maxPrice });
     setResetSliders(true);
     setSearchInput('');
 
     const filters = {
       models: [],
-      fuels: [],
+      categories: [],
       priceRange: { min: minPrice, max: maxPrice },
       searchInput: '',
     };
@@ -59,21 +61,18 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
     setResetSliders(false); // Reset the state after the effect runs
   }, [resetSliders]);
 
+
   const renderCheckboxOptions = (options, selectedOptions, setSelectedOptions) => {
     return options?.map((option) => (
-      <div key={option} className="form-control border-none bg-transparent">
-        <label className="cursor-pointer label">
-          <span className={`label-text p-2 ${selectedOptions.includes(option) ? 'text-yellow-500' : ''}`}>{option}</span>
-          <input
-            type="checkbox"
-            checked={selectedOptions.includes(option)}
-            onChange={() => handleCheckboxChange(option, selectedOptions, setSelectedOptions)}
-            className="checkbox checkbox-warning"
-          />
-        </label>
+
+      <div class="checkbox-wrapper-13" onChange={() => handleCheckboxChange(option, selectedOptions, setSelectedOptions)}>
+        <input checked={selectedOptions.includes(option)} id={option} type="checkbox" />
+        <label for={option}>{option}</label>
       </div>
+
     ));
   };
+
 
   const handleCheckboxChange = (option, selectedOptions, setSelectedOptions) => {
     const updatedOptions = selectedOptions.includes(option)
@@ -103,7 +102,14 @@ const FilterSection = ({ onFilterChange, modelsData, fuelsData, maxPrice, minPri
       <div className="filter-section">
         <h2 className='font-bold text-lg'>Filter by Category</h2>
         <div className="checkbox-container">
-          {renderCheckboxOptions(modelsData, selectedModelOptions, setSelectedModelOptions)}
+          {renderCheckboxOptions(categoriesData, selectedCategoryOptions, setselectedCategoryOptions)}
+        </div>
+      </div>
+
+      <div className="filter-section">
+        <h2 className='font-bold text-lg'>Filter by Models</h2>
+        <div className="checkbox-container">
+          {renderCheckboxOptions(modelsData, selectedModelsOptions, setSelectedModelsOptions)}
         </div>
       </div>
 

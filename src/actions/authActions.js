@@ -12,6 +12,7 @@ export const clearError = () => ({
 });
 
 const baseUrl = process.env.REACT_APP_API_URL;
+// const baseUrl = 'http://127.0.0.1:3001';
 
 export const register = (userData) => async (dispatch) => {
     try {

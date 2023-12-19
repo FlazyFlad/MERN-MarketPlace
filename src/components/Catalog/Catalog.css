@@ -17,6 +17,35 @@
     margin-top: 1%;
 }
 
+.s-nav {
+    margin-top: 25%;
+    position: relative;
+    display: inline-block;
+}
+
+.s-icon {
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.s-icon:hover {
+    color: #888;
+}
+
+.s-total-qty {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #f00;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 50%;
+    font-size: 0.75em;
+    font-size: 0.9em;
+}
+
+
+
 .icons-section {
     width: 80%;
     margin: 0 auto;

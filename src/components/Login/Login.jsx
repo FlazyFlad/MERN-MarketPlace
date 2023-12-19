@@ -37,7 +37,7 @@ const Login = () => {
             <div className={`form-container ${theme ? 'dark-section' : 'light-section'}`}>
                 <h2 className="auth-title">Login to MarketPlace</h2> <br />
 
-                {error && (
+                {error && JSON.stringify(error).length < 50 && (
                     <div
                         className="error-render"
                     >

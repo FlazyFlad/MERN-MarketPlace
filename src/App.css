@@ -5,6 +5,10 @@ body{
   font-family: "Montserrat", sans-serif !important;
 }
 
+.app-spacer {
+  min-height: 88.8vh;
+}
+
 /* Themes start */
 
 .dark-section {

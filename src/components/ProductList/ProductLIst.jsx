@@ -4,9 +4,8 @@ import productData from "../../ProductsData.json";
 import { ThemeContext } from "../../Context";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../actions/productActions";
-import { addToCart, fetchUserCart } from "../../actions/cartActions";
 import CartComponent from "./CartComponent";
-import { toggleCartNav } from "../../actions/cartActions";
+import { addToCart, fetchUserCart } from "../../actions/CartActions";
 
 const ProductList = ({ filteresProducts }) => {
     const { theme } = useContext(ThemeContext);
@@ -59,13 +58,11 @@ const ProductList = ({ filteresProducts }) => {
 
     return (
         <>
-            {isCartNavOpen && (
-                <CartComponent cartItems={cartItems} />
-            )}
+            <CartComponent cartItems={cartItems} />
             {showNotification && (
                 <>
                     <div className={`notification-bar ${showNotification ? 'show' : ''}`}>
-                        Product is already added
+                        Product has already been added
                     </div>
                 </>
             )}
@@ -78,8 +75,8 @@ const ProductList = ({ filteresProducts }) => {
                         <img className="p-img" src={`${product.ImageURL}`} />
                     </div>
                     <div className="p-details">
-                        <div class="cart-section name-fav">
-                            <strong class="cart-all product-name">{product.Name}</strong>
+                        <div className="cart-section name-fav">
+                            <strong className="cart-all product-name">{product.Name}</strong>
                         </div>
                         <div className="cart-section purchase">
                             <p className="cart-all product-price">{product.Price}₸</p>

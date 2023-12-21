@@ -104,6 +104,12 @@
   position: relative;
 }
 
+@media screen and (max-width: 1920px) {
+  .thumb {
+    width: 14.5%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .thumb {
     width: 76%;

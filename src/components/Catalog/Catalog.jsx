@@ -12,6 +12,7 @@ const Catalog = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products);
     const cartItems = useSelector((state) => state.cart.cartItems);
+    const isLoadingCart = useSelector((state) => state.cart.isLoadingCart);
     const [isLoading, setIsLoading] = useState(true);
 
     const handleToggleCartNav = () => {
@@ -24,6 +25,7 @@ const Catalog = () => {
 
     const [filteresProducts, setFilteredProducts] = useState(products);
     const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
 
     useEffect(() => {
         dispatch(fetchProducts())
@@ -65,6 +67,7 @@ const Catalog = () => {
                 );
             })
 
+        setCurrentPage(1);
         setFilteredProducts(updatedFilteredProducts, callback);
     };
 
@@ -72,6 +75,16 @@ const Catalog = () => {
     const handleFilterPageChange = () => {
         setCurrentPage(1);
     };
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = filteresProducts.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(filteresProducts?.length / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
 
     const calculateTotalQuantity = () => {
         let totalQuantity = 0;
@@ -87,7 +100,7 @@ const Catalog = () => {
 
     return (
         <>
-            {!isLoading ? (
+            {!isLoading && !isLoadingCart ? (
                 <>
                     <div className="icons-section">
                         <div className="left-icons">
@@ -112,15 +125,13 @@ const Catalog = () => {
                         </div>
                     </div>
                     <div className="content-section">
-                        <div className="products-list">
-                            <ProductList filteresProducts={filteresProducts} />
-                        </div>
+                        <ProductList currentProducts={currentProducts} currentPage={currentPage} itemsPerPage={itemsPerPage} setCurrentPage={setCurrentPage} />
 
                         <div className="filtering-section">
                             <div>
                                 <FilterSection
                                     onFilterChange={handleFilterChange}
-                                    categoriesData={products?.map((product) => product?.CategoryID?.Name)}
+                                    categoriesData={[...new Set(products?.map((product) => product?.CategoryID?.Name))]}
                                     modelsData={[...new Set(products?.map((product) => product?.ModelID?.Name))]}
                                     maxPrice={maxPrice}
                                     minPrice={minPrice}
@@ -128,6 +139,17 @@ const Catalog = () => {
                                 />
                             </div>
                         </div>
+                    </div>
+                    <div className="pagination-section">
+                        {pageNumbers.map(number => (
+                            <button
+                                key={number}
+                                onClick={() => paginate(number)}
+                                className={`pagination-button ${currentPage === number ? 'active' : ''}`}
+                            >
+                                {number}
+                            </button>
+                        ))}
                     </div>
                 </>
             ) : (

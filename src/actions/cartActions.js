@@ -21,6 +21,14 @@ export const toggleCartNav = () => ({
     type: 'TOGGLE_CART_NAV',
 });
 
+export const addToCartStart = () => ({
+    type: 'ADD_TO_CART_START',
+});
+
+export const addtoCartEnd = () => ({
+    type: 'ADD_TO_CART_END',
+});
+
 export const addToCartSuccess = (cartItem) => ({
     type: ADD_TO_CART_SUCCESS,
     payload: cartItem,
@@ -65,6 +73,7 @@ export const clearCartFailure = (error) => ({
 
 export const addToCart = (ProductID, Quantity) => async (dispatch, getState) => {
     try {
+        dispatch(addToCartStart());
         await dispatch(getUserInfo());
 
         const { userInfo } = getState().auth;
@@ -77,15 +86,17 @@ export const addToCart = (ProductID, Quantity) => async (dispatch, getState) => 
             Quantity,
         });
         dispatch(fetchUserCart());
+        dispatch(addtoCartEnd());
         dispatch(addToCartSuccess(response.data));
     } catch (error) {
         dispatch(addToCartFailure(error));
+        dispatch(addtoCartEnd());
     }
 };
 
 export const changeQuantity = (ProductID, NewQuantity) => async (dispatch, getState) => {
+    dispatch(addToCartStart());
     dispatch(changeQuantityRequest());
-
     try {
         await dispatch(getUserInfo());
 
@@ -99,11 +110,11 @@ export const changeQuantity = (ProductID, NewQuantity) => async (dispatch, getSt
             NewQuantity,
         });
         dispatch(fetchUserCart());
-
+        dispatch(addtoCartEnd());
         dispatch(changeQuantitySuccess());
-        dispatch(fetchUserCart());
     } catch (error) {
         dispatch(changeQuantityFailure(error.message));
+        dispatch(addtoCartEnd());
     }
 };
 
@@ -134,8 +145,8 @@ export const fetchUserCart = () => async (dispatch, getState) => {
 
 
 export const clearCart = () => async (dispatch, getState) => {
+    dispatch(addToCartStart());
     dispatch(changeQuantityRequest());
-
     try {
         await dispatch(getUserInfo());
 
@@ -145,18 +156,19 @@ export const clearCart = () => async (dispatch, getState) => {
 
         await axios.post(`${baseUrl}/cart/clear-cart`, {
             UserID,
-        });        
+        });
         dispatch(fetchUserCart());
-
+        dispatch(addtoCartEnd());
         dispatch(changeQuantitySuccess());
     } catch (error) {
         dispatch(changeQuantityFailure(error.message));
+        dispatch(addtoCartEnd());
     }
 };
 
 export const removeItem = (ProductID) => async (dispatch, getState) => {
+    dispatch(addToCartStart());
     dispatch(changeQuantityRequest());
-
     try {
         await dispatch(getUserInfo());
 
@@ -169,9 +181,10 @@ export const removeItem = (ProductID) => async (dispatch, getState) => {
             ProductID,
         });
         dispatch(fetchUserCart());
-
+        dispatch(addtoCartEnd());
         dispatch(changeQuantitySuccess());
     } catch (error) {
         dispatch(changeQuantityFailure(error.message));
+        dispatch(addtoCartEnd());
     }
 };

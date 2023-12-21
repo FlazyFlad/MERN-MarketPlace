@@ -2,6 +2,7 @@ const initialState = {
     cartItems: [],
     error: null,
     isCartNavOpen: false,
+    
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -10,6 +11,16 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isCartNavOpen: !state.isCartNavOpen,
+            };
+        case 'ADD_TO_CART_START':
+            return {
+                ...state,
+                isLoadingCart: true,
+            };
+        case 'ADD_TO_CART_END':
+            return {
+                ...state,
+                isLoadingCart: false,
             };
         case 'ADD_TO_CART_SUCCESS':
             return {
@@ -21,6 +32,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
+                
             };
         case 'FETCH_USER_CART_REQUEST':
             return {
@@ -33,12 +45,14 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 cartItems: action.payload,
+                
             };
         case 'FETCH_USER_CART_FAILURE':
             return {
                 ...state,
                 loading: false,
                 error: action.payload,
+                
             };
         case 'REMOVE_FROM_CART_SUCCESS':
             return {
@@ -50,6 +64,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
+                
             };
         case 'CHANGE_QUANTITY_SUCCESS':
             return {
@@ -65,6 +80,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
+                
             };
         case 'CLEAR_CART_SUCCESS':
             return {
@@ -76,6 +92,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
+                
             };
         default:
             return state;

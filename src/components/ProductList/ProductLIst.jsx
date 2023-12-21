@@ -6,7 +6,7 @@ import { fetchProducts } from "../../actions/productActions";
 import CartComponent from "./CartComponent";
 import { addToCart, fetchUserCart } from "../../actions/cartActions";
 
-const ProductList = ({ filteresProducts }) => {
+const ProductList = ({ currentProducts, currentPage, itemsPerPage, setCurrentPage }) => {
     const { theme } = useContext(ThemeContext);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.product.loading);
@@ -44,8 +44,6 @@ const ProductList = ({ filteresProducts }) => {
         dispatch(addToCart(productId, quantity))
     };
 
-
-
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -65,29 +63,42 @@ const ProductList = ({ filteresProducts }) => {
                     </div>
                 </>
             )}
-            {filteresProducts.map((product) => (
-                <div key={product._id} className={`product p-card rounded-2xl ${theme ? "dark-section " : "light-section"}`}>
-                    <div className="heart-icon">
-                        <i className="fa-solid fa-heart"></i>
-                    </div>
-                    <div className="cart-section p-img-container">
-                        <img className="p-img" src={`${product.ImageURL}`} />
-                    </div>
-                    <div className="p-details">
-                        <div className="cart-section name-fav">
-                            <strong className="cart-all product-name">{product.Name}</strong>
+            <div className="products-list">
+                {currentProducts.map((product) => (
+                    <div key={product._id} className={`product p-card rounded-2xl ${theme ? "dark-section " : "light-section"}`}>
+                        <div className="heart-icon">
+                            <i className="fa-solid fa-heart"></i>
                         </div>
-                        <div className="cart-section purchase">
-                            <p className="cart-all product-price">{product.Price}₸</p>
-                            <span className="cart-all btn-add">
-                                <div className="cart-section">
-                                    <button onClick={() => handleAddToCart(product._id)} className={`cart-all ${theme ? "add-btn-dark" : "add-btn-light"}`}>Add <i className="fas fa-chevron-right"></i></button>
-                                </div>
-                            </span>
+                        <div className="cart-section p-img-container">
+                            <img className="p-img" src={`${product.ImageURL}`} />
+                        </div>
+                        <div className="p-details">
+                            <div className="cart-section name-fav">
+                                <strong className="cart-all product-name">{product.Name}</strong>
+                            </div>
+                            <div className="cart-section purchase">
+                                <p className="cart-all product-price">{product.Price}₸</p>
+                                <span className="cart-all btn-add">
+                                    <div className="cart-section">
+                                        <button onClick={() => handleAddToCart(product._id)} className={`cart-all ${theme ? "add-btn-dark" : "add-btn-light"}`}>Add <i className="fas fa-chevron-right"></i></button>
+                                    </div>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
+            {/* <div className="flex justify-center bg-yellow-500 text-white p-2 rounded-xl">
+                    {pageNumbers.map(number => (
+                        <button
+                            key={number}
+                            onClick={() => paginate(number)}
+                            className={`${currentPage === number ? 'bg-yellow-600' : 'bg-yellow-500'} transition duration-300 ease-in-out hover:bg-yellow-600 p-2 rounded-lg cursor-pointer`}
+                        >
+                            {number}
+                        </button>
+                    ))}
+                </div> */}
         </>
     );
 };

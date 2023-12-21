@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../actions/productActions";
 import CartComponent from "./CartComponent";
 import { addToCart, fetchUserCart } from "../../actions/cartActions";
+import Order from "./Order";
 
-const ProductList = ({ currentProducts, currentPage, itemsPerPage, setCurrentPage }) => {
+const ProductList = ({ currentProducts }) => {
     const { theme } = useContext(ThemeContext);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.product.loading);
     const error = useSelector((state) => state.product.error);
     const cartItems = useSelector((state) => state.cart.cartItems);
     const cartError = useSelector((state) => state.cart.error);
-    const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
+    const isOrderOpen = useSelector((state) => state.cart.isOrderOpen);
 
     useEffect(() => {
         dispatch(fetchUserCart());
@@ -44,6 +45,14 @@ const ProductList = ({ currentProducts, currentPage, itemsPerPage, setCurrentPag
         dispatch(addToCart(productId, quantity))
     };
 
+
+    const totalCartPrice = cartItems.reduce((total, cartItem) => {
+        const productPrice = cartItem.ProductID?.Price || 0;
+        const quantity = cartItem.Quantity || 0;
+
+        return total + productPrice * quantity;
+    }, 0);
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -55,7 +64,8 @@ const ProductList = ({ currentProducts, currentPage, itemsPerPage, setCurrentPag
 
     return (
         <>
-            <CartComponent cartItems={cartItems} />
+            <CartComponent cartItems={cartItems} totalCartPrice={totalCartPrice} />
+
             {showNotification && (
                 <>
                     <div className={`notification-bar ${showNotification ? 'show' : ''}`}>
@@ -64,6 +74,11 @@ const ProductList = ({ currentProducts, currentPage, itemsPerPage, setCurrentPag
                 </>
             )}
             <div className="products-list">
+
+                <div class="order-now">
+                    <Order totalCartPrice={totalCartPrice} />
+                </div>
+
                 {currentProducts.map((product) => (
                     <div key={product._id} className={`product p-card rounded-2xl ${theme ? "dark-section " : "light-section"}`}>
                         <div className="heart-icon">
@@ -77,7 +92,7 @@ const ProductList = ({ currentProducts, currentPage, itemsPerPage, setCurrentPag
                                 <strong className="cart-all product-name">{product.Name}</strong>
                             </div>
                             <div className="cart-section purchase">
-                                <p className="cart-all product-price">{product.Price}₸</p>
+                                <p className="cart-all product-price">{product.Price} ₸</p>
                                 <span className="cart-all btn-add">
                                     <div className="cart-section">
                                         <button onClick={() => handleAddToCart(product._id)} className={`cart-all ${theme ? "add-btn-dark" : "add-btn-light"}`}>Add <i className="fas fa-chevron-right"></i></button>

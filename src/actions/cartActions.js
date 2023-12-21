@@ -17,6 +17,19 @@ const baseUrl = process.env.REACT_APP_API_URL;
 export const FETCH_USER_CART_REQUEST = 'FETCH_USER_CART_REQUEST';
 export const FETCH_USER_CART_SUCCESS = 'FETCH_USER_CART_SUCCESS';
 export const FETCH_USER_CART_FAILURE = 'FETCH_USER_CART_FAILURE';
+
+export const toggleOrderSuccessOpen = () => ({
+    type: 'TOGGLE_ORDER_SUCCESS_OPEN',
+});
+
+export const toggleOrderDetailsOpen = () => ({
+    type: 'TOGGLE_ORDER_DETAILS_OPEN',
+});
+
+export const toggleOrderNow = () => ({
+    type: 'TOGGLE_ORDER_NOW',
+});
+
 export const toggleCartNav = () => ({
     type: 'TOGGLE_CART_NAV',
 });

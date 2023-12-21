@@ -64,7 +64,7 @@
 }
 
 .cover {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.75);
@@ -347,14 +347,14 @@
     font-weight: 500;
 }
 
-.add-btn-dark{
+.add-btn-dark {
     border-radius: 20px;
     background: none;
     padding: 6px 10px;
     border: 1px solid white;
 }
 
-.add-btn-light{
+.add-btn-light {
     border-radius: 20px;
     background: none;
     padding: 6px 10px;
@@ -366,7 +366,7 @@
     color: black;
 }
 
-.add-btn-light:hover{
+.add-btn-light:hover {
     background-color: black;
     color: white;
 }
@@ -386,7 +386,7 @@
 }
 
 .side-nav {
-    position: absolute;
+    position: fixed;
     background: #010101;
     opacity: 0.95;
     height: 100%;
@@ -537,8 +537,10 @@
 
 .invoice {
     position: absolute;
-    height: 90%;
-    width: 90%;
+    top: 50%;
+    left: 80%;
+    transform: translate(0%, -50%);
+    z-index: 5;
     background: rgba(0, 0, 0, 0.95);
     padding: 5% 4%;
     margin: 0 auto;
@@ -647,8 +649,9 @@
         width: 80%;
     }
 
-    .invoice .order {
-        width: 60%;
+    .invoice {
+        width: 40%;
+        height: 40%;
     }
 
     .main-cart {
@@ -665,9 +668,7 @@
         }
     }
 
-    .invoice .order {
-        width: 80%;
-    }
+
 
     .nav {
         width: 576px;

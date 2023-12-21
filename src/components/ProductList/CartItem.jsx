@@ -24,7 +24,7 @@ const CartItem = ({ cartItems, handleQuantityChange, handleRemoveItem }) => {
                             </button>
                         </div>
                     </span>
-                    <p className='price'>₹ {cartItem.ProductID?.Price * cartItem.Quantity}</p>
+                    <p className='price'>₸ {cartItem.ProductID?.Price * cartItem.Quantity}</p>
                     <button onClick={() => handleRemoveItem(cartItem.ProductID)}>
                         <i className='fas fa-trash'></i>
                     </button>

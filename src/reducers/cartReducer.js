@@ -2,11 +2,28 @@ const initialState = {
     cartItems: [],
     error: null,
     isCartNavOpen: false,
-    
+    isOrderOpen: false,
+    isOrderDetailsOpen: false,
+    isOrderSuccessOpen: false,
 };
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'TOGGLE_ORDER_SUCCESS_OPEN':
+            return {
+                ...state,
+                isOrderSuccessOpen: !state.isOrderSuccessOpen,
+            };
+        case 'TOGGLE_ORDER_DETAILS_OPEN':
+            return {
+                ...state,
+                isOrderDetailsOpen: !state.isOrderDetailsOpen,
+            };
+        case 'TOGGLE_ORDER_NOW':
+            return {
+                ...state,
+                isOrderOpen: !state.isOrderOpen,
+            };
         case 'TOGGLE_CART_NAV':
             return {
                 ...state,
@@ -32,7 +49,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-                
+
             };
         case 'FETCH_USER_CART_REQUEST':
             return {
@@ -45,14 +62,14 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 cartItems: action.payload,
-                
+
             };
         case 'FETCH_USER_CART_FAILURE':
             return {
                 ...state,
                 loading: false,
                 error: action.payload,
-                
+
             };
         case 'REMOVE_FROM_CART_SUCCESS':
             return {
@@ -64,7 +81,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-                
+
             };
         case 'CHANGE_QUANTITY_SUCCESS':
             return {
@@ -80,7 +97,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-                
+
             };
         case 'CLEAR_CART_SUCCESS':
             return {
@@ -92,7 +109,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-                
+
             };
         default:
             return state;

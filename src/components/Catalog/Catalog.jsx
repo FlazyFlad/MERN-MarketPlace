@@ -4,19 +4,26 @@ import { toggleCartNav } from '../../actions/cartActions';
 import FilterSection from '../FilterSection/FilterSection';
 import ProductList from '../ProductList/ProductLIst';
 import './Catalog.css';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { fetchProducts } from '../../actions/productActions';
 
 const Catalog = () => {
+    const { theme } = useContext(ThemeContext);
     const dispatch = useDispatch();
     const products = useSelector((state) => state.product.products);
     const cartItems = useSelector((state) => state.cart.cartItems);
+    const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
     const isLoadingCart = useSelector((state) => state.cart.isLoadingCart);
     const [isLoading, setIsLoading] = useState(true);
+    const [sortBy, setSortBy] = useState('');
+
+    const handleSortChange = (option) => {
+        setSortBy(option);
+    };
 
     const handleToggleCartNav = () => {
-        dispatch({ type: 'TOGGLE_CART_NAV' });
+        dispatch(toggleCartNav());
     };
 
     const priceValues = products?.map((product) => product?.Price).filter((value) => !isNaN(value)) || [];
@@ -71,18 +78,31 @@ const Catalog = () => {
         setFilteredProducts(updatedFilteredProducts, callback);
     };
 
-
     const handleFilterPageChange = () => {
         setCurrentPage(1);
     };
+
+    const sortedProducts = useMemo(() => {
+        switch (sortBy) {
+            case 'descending':
+                return [...filteresProducts].sort((a, b) => b.Price - a.Price);
+            case 'ascending':
+                return [...filteresProducts].sort((a, b) => a.Price - b.Price);
+            case 'popularity':
+                return [...filteresProducts].sort((a, b) => b.StockQuantity - a.StockQuantity);
+            default:
+                return filteresProducts;
+        }
+    }, [sortBy, filteresProducts]);
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentProducts = filteresProducts.slice(indexOfFirstItem, indexOfLastItem);
+    const currentProducts = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(filteresProducts?.length / itemsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(sortedProducts?.length / itemsPerPage); i++) {
         pageNumbers.push(i);
     }
 
@@ -98,15 +118,24 @@ const Catalog = () => {
 
     const totalQuantity = calculateTotalQuantity();
 
+
     return (
         <>
             {!isLoading && !isLoadingCart ? (
                 <>
                     <div className="icons-section">
                         <div className="left-icons">
-                            <i className="icon">Icon for 3 items per row</i>
-                            <i className="icon">Icon for 4 items per row</i>
-                            <button> asdfasd</button>
+                            <div className="sorting-dropdown">
+                                <button className="menu-icon">
+                                    <i class="s-icon fa-solid fa-bars"></i>
+                                </button>
+                                <div className={`dropdown-content dropdown-content${theme ? '-dark dark-section' : '-light light-section'}`}>
+                                    <div onClick={() => handleSortChange('descending')}>Descending Price</div>
+                                    <div onClick={() => handleSortChange('ascending')}>Ascending Price</div>
+                                    <div onClick={() => handleSortChange('popularity')}>By Popularity</div>
+                                    <div onClick={() => handleSortChange('relevancy')}>By Relevancy</div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="right-icons">
@@ -140,21 +169,24 @@ const Catalog = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="pagination-section">
-                        {pageNumbers.map(number => (
-                            <button
-                                key={number}
-                                onClick={() => paginate(number)}
-                                className={`pagination-button ${currentPage === number ? 'active' : ''}`}
-                            >
-                                {number}
-                            </button>
-                        ))}
-                    </div>
+                    {!isCartNavOpen &&
+                        < div className="pagination-section">
+                            {pageNumbers.map(number => (
+                                <button
+                                    key={number}
+                                    onClick={() => paginate(number)}
+                                    className={`pagination-button ${currentPage === number ? 'active' : ''}`}
+                                >
+                                    {number}
+                                </button>
+                            ))}
+                        </div>
+                    }
                 </>
             ) : (
                 <LoadingSpinner />
-            )}
+            )
+            }
         </>
     )
 }

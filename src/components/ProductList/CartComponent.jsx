@@ -2,12 +2,12 @@
 import React, { useContext } from "react";
 import "./CartComponent.css"
 import { useDispatch, useSelector } from "react-redux";
-import { changeQuantity, toggleCartNav, clearCart, removeItem } from "../../actions/cartActions";
+import { changeQuantity, toggleCartNav, clearCart, removeItem, toggleOrderNow } from "../../actions/cartActions";
 import Total from "./Total";
 import CartItem from "./CartItem";
 import { ThemeContext } from "../../Context";
 
-const CartComponent = ({ cartItems, sideNav, buy }) => {
+const CartComponent = ({ cartItems, totalCartPrice }) => {
     const { theme } = useContext(ThemeContext)
     const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
     const dispatch = useDispatch();
@@ -30,8 +30,12 @@ const CartComponent = ({ cartItems, sideNav, buy }) => {
         visibility: isCartNavOpen ? '' : 'hidden',
     };
 
-    const cartDisplay = {
-        right: isCartNavOpen ? 'block' : 'none',
+    const handleToggleOrderNow = () => {
+        if (cartItems.length > 0) {
+            dispatch(toggleCartNav());
+            dispatch(toggleOrderNow());
+        }
+        console.log(cartItems)
     };
 
     const handleClearCart = () => {
@@ -42,7 +46,7 @@ const CartComponent = ({ cartItems, sideNav, buy }) => {
 
     return (
         <div className="cart">
-                <div className={`cart-section side-nav`} style={openingCart}>
+            <div className={`cart-section side-nav`} style={openingCart}>
                 <button className="cart-section" onClick={() => dispatch(toggleCartNav())}>
                     <i className={`fas fa-times ${theme ? 'dark-text' : 'dark-text'}`}></i>
                 </button>
@@ -59,9 +63,9 @@ const CartComponent = ({ cartItems, sideNav, buy }) => {
                     <span class="empty-cart">Looks Like You Haven't Added Any Product In The Cart</span>
                 )}
                 <div className="cart-section cart-section final">
-                    <Total />
+                    <Total totalCartPrice={totalCartPrice} />
                     <div className="cart-section action">
-                        <button onClick={() => buy(1)} className={`btn buy ${theme ? 'dark-text' : 'dark-text'}`}>
+                        <button onClick={() => handleToggleOrderNow()} className={`btn buy ${theme ? 'dark-text' : 'dark-text'}`}>
                             Purchase <i className="fas fa-credit-card" style={{ color: "#6665dd" }}></i>
                         </button>
                         <button onClick={() => handleClearCart()} className={`btn clear ${theme ? 'dark-text' : 'dark-text'}`}>

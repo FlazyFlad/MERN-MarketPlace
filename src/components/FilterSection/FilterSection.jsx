@@ -12,8 +12,6 @@ const FilterSection = ({ onFilterChange, categoriesData, modelsData, maxPrice, m
   const [selectedPriceRange, setSelectedPriceRange] = useState({ min: minPrice, max: maxPrice });
   const [searchInput, setSearchInput] = useState('');
 
-
-
   useEffect(() => {
     setSelectedPriceRange({ min: minPrice, max: maxPrice });
   }, [maxPrice]);

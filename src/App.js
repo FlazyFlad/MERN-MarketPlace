@@ -14,6 +14,9 @@ import AuthModal from './components/AuthModal/AuthModal';
 function App() {
   const [theme, setTheme] = useState(true);
   const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
+  const isOrderOpen = useSelector((state) => state.cart.isOrderOpen);
+  const isOrderDetailsOpen = useSelector((state) => (state.cart.isOrderDetailsOpen));
+  const isOrderSuccessOpen = useSelector((state) => (state.cart.isOrderSuccessOpen));
   const dispatch = useDispatch();
 
   const handleChangeTheme = () => {
@@ -22,12 +25,13 @@ function App() {
 
   return (
     <>
+
+      <div className={`${isCartNavOpen | isOrderOpen | isOrderDetailsOpen | isOrderSuccessOpen ? 'cover' : ''}`}></div>
       <ThemeContext.Provider value={{ theme, handleChangeTheme }}>
         <div className={`app-container ${theme ? 'dark-background' : 'light-background'}`}>
-        <div className={`${isCartNavOpen ? 'cover' : ''}`}></div>
           <Header />
           <AuthModal />
-          <div className={`app-spacer ${theme ? 'dark-background' : 'light-background'} overlay ${isCartNavOpen ? 'open' : ''}`}  style={{ display: 'block' }}>
+          <div className={`app-spacer ${theme ? 'dark-background' : 'light-background'} overlay ${isCartNavOpen ? 'open' : ''}`} style={{ display: 'block' }}>
             <Routes>
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/register" element={<Register />} />

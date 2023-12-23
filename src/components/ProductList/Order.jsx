@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { clearCart, toggleCartNav, toggleOrderDetailsOpen, toggleOrderNow, toggleOrderSuccessOpen } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThemeContext } from '../../Context';
 
 const Order = ({ totalCartPrice }) => {
+    const { theme } = useContext(ThemeContext);
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => (state.cart.cartItems));
     const isOrderOpen = useSelector((state) => (state.cart.isOrderOpen));
@@ -21,7 +23,6 @@ const Order = ({ totalCartPrice }) => {
 
     const handleToggleOrderSuccess = () => {
         dispatch(toggleOrderDetailsOpen());
-        dispatch(clearCart());
         dispatch(toggleOrderSuccessOpen());
     };
 
@@ -34,13 +35,9 @@ const Order = ({ totalCartPrice }) => {
     } else if (isOrderSuccessOpen) {
         invoiceStyle = { width: '400px', height: '180px' };
     }
-
-    const generatedOrderId = () => {
-        const orderId = Math.floor(Math.random() * 1000000);
-        return orderId;
-    }
-
+    
     const handleToggleOrderClose = () => {
+        dispatch(clearCart());
         dispatch(toggleOrderSuccessOpen());
     };
 
@@ -48,44 +45,44 @@ const Order = ({ totalCartPrice }) => {
         <>
             {isOrderOpen | isOrderDetailsOpen | isOrderSuccessOpen ? (
                 <>
-                    <div class="cart-section invoice" style={invoiceStyle}>
+                    <div className={`cart-section invoice ${theme ? 'dark-text' : 'dark-text'}`} style={invoiceStyle}>
                         {isOrderOpen && (
                             <>
                                 {cartItems?.map((cartItem) => (
-                                    <div class="cart-section shipping-items">
-                                        <div class="cart-section item-names"><span>{cartItem.Quantity} x {cartItem.ProductID?.Name}</span></div>
-                                        <div class="cart-section items-price"><span>{cartItem.ProductID?.Price} ₸</span></div>
+                                    <div className="cart-section shipping-items">
+                                        <div className="cart-section item-names"><span>{cartItem.Quantity} x {cartItem.ProductID?.Name}</span></div>
+                                        <div className="cart-section items-price"><span>{cartItem.ProductID?.Price} ₸</span></div>
                                     </div>
                                 ))}
                                 <hr />
-                                <div class="cart-section payment">
+                                <div className="cart-section payment">
                                     <em>payment</em>
                                     <div>
-                                        <p>total amount to be paid:</p><span class="pay">₸ {totalCartPrice}</span>
+                                        <p>total amount to be paid:</p><span className="pay">₸ {totalCartPrice}</span>
                                     </div>
                                 </div>
-                                <div class="cart-section order">
-                                    <button onClick={(handleToggleOrderDetails)} class="btn-order btn">Order Now</button>
-                                    <button onClick={(handleToggleCartNav)} class="btn-cancel btn">Cancel</button>
+                                <div className="cart-section order">
+                                    <button onClick={(handleToggleOrderDetails)} className="btn-order btn">Order Now</button>
+                                    <button onClick={(handleToggleCartNav)} className="btn-cancel btn">Cancel</button>
                                 </div>
                             </>
                         )}
                         {isOrderDetailsOpen && (
                             <>
-                                <div class="cart-section order-details">
+                                <div className="cart-section order-details">
                                     <em>your order has been placed</em>
                                     <p>Your order-id is : <span>{cartItems[0]._id}</span></p>
                                     <p>your order will be delivered to you in 3-5 working days</p>
                                     <p>you can pay <span>₸ {totalCartPrice}</span> by card or any online transaction method after the products have been dilivered to you</p>
                                 </div>
-                                <button onClick={(handleToggleOrderSuccess)} class="btn-ok">ok</button>
+                                <button onClick={(handleToggleOrderSuccess)} className="btn-ok">ok</button>
                             </>
                         )}
                         {isOrderSuccessOpen && (
                             <>
                                 <div>
-                                    <div class="cart-section order-details"><em class="thanks">Thanks for shopping with us</em></div>
-                                    <button onClick={(handleToggleOrderClose)} class="btn-ok">continue</button>
+                                    <div className="cart-section order-details"><em className="thanks">Thanks for shopping with us</em></div>
+                                    <button onClick={(handleToggleOrderClose)} className="btn-ok">continue</button>
                                 </div>
                             </>
                         )}

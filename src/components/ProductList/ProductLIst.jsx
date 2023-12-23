@@ -2,10 +2,11 @@ import "./ProductList.css";
 import React, { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../../Context";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../actions/productActions";
 import CartComponent from "./CartComponent";
 import { addToCart, fetchUserCart } from "../../actions/cartActions";
 import Order from "./Order";
+import FavoriteComponent from "./FavoriteComponent";
+import { addToFavorites, fetchUserFavorites, handleErrorValue, removeFromFavorites } from "../../actions/favoriteActions";
 
 const ProductList = ({ currentProducts }) => {
     const { theme } = useContext(ThemeContext);
@@ -13,31 +14,51 @@ const ProductList = ({ currentProducts }) => {
     const loading = useSelector((state) => state.product.loading);
     const error = useSelector((state) => state.product.error);
     const cartItems = useSelector((state) => state.cart.cartItems);
+    const favoriteItems = useSelector((state) => (state.favorite.favoriteItems))
     const cartError = useSelector((state) => state.cart.error);
-    const isOrderOpen = useSelector((state) => state.cart.isOrderOpen);
+    const favoriteError = useSelector((state) => state.favorite.error);
 
     useEffect(() => {
         dispatch(fetchUserCart());
+        dispatch(fetchUserFavorites());
     }, [dispatch]);
 
-    const [showNotification, setShowNotification] = useState(false);
+
+    const [showCartNotification, setShowCartNotification] = useState(false);
+    const [showFavoriteNotification, setShowFavoriteNotification] = useState(false);
 
     useEffect(() => {
         if (cartError && cartError.response?.data?.message === "Product already in the cart") {
-            setShowNotification(true);
-            console.log(cartError)
+            setShowCartNotification(true);
         }
     }, [cartError]);
 
     useEffect(() => {
-        if (showNotification) {
+        if (favoriteError && favoriteError.response?.data?.message === "Product already in favorites") {
+            setShowFavoriteNotification(true);
+        }
+    }, [favoriteError]);
+
+    useEffect(() => {
+        if (showCartNotification) {
             const timer = setTimeout(() => {
-                setShowNotification(false);
+                setShowCartNotification(false);
             }, 2000);
 
             return () => clearTimeout(timer);
         }
-    }, [showNotification]);
+    }, [showCartNotification]);
+
+    useEffect(() => {
+        if (showFavoriteNotification) {
+            const timer = setTimeout(() => {
+                setShowFavoriteNotification(false);
+                dispatch(handleErrorValue());
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [showFavoriteNotification]);
 
     const handleAddToCart = async (productId) => {
         const quantity = 1;
@@ -45,6 +66,13 @@ const ProductList = ({ currentProducts }) => {
         dispatch(addToCart(productId, quantity))
     };
 
+    const handleAddToFavorites = async (productId) => {
+        dispatch(addToFavorites(productId))
+    };
+
+    const handleRemoveItem = (productID) => {
+        dispatch(removeFromFavorites(productID._id));
+    };
 
     const totalCartPrice = cartItems.reduce((total, cartItem) => {
         const productPrice = cartItem.ProductID?.Price || 0;
@@ -61,18 +89,32 @@ const ProductList = ({ currentProducts }) => {
         return <p>Error: {error}</p>;
     }
 
+    const isProductInFavorites = (productId) => {
+        return favoriteItems.some((favoriteItem) => favoriteItem.ProductID._id === productId);
+    };
 
     return (
         <>
+            <FavoriteComponent favoriteItems={favoriteItems} handleRemoveItem={handleRemoveItem} />
             <CartComponent cartItems={cartItems} totalCartPrice={totalCartPrice} />
 
-            {showNotification && (
+            {showCartNotification && (
                 <>
-                    <div className={`notification-bar ${showNotification ? 'show' : ''}`}>
-                        Product has already been added
+                    <div className={`notification-bar ${showCartNotification ? 'show' : ''}`}>
+                        Product has already been added to the Cart
                     </div>
                 </>
             )}
+
+            {showFavoriteNotification && (
+                <>
+                    <div className={`notification-bar ${showFavoriteNotification ? 'show' : ''}`}>
+                        Product has already been added to the Favorites
+                    </div>
+                </>
+            )}
+
+
             <div className="products-list">
 
                 <div class="order-now">
@@ -81,11 +123,21 @@ const ProductList = ({ currentProducts }) => {
 
                 {currentProducts.map((product) => (
                     <div key={product._id} className={`product p-card rounded-2xl ${theme ? "dark-section " : "light-section"}`}>
-                        <div className="heart-icon">
-                            <i className="fa-solid fa-heart"></i>
+                        <div className={`heart-icon ${isProductInFavorites(product._id) ? 'in-favorites' : ''}`}>
+                            <i
+                                onClick={() => {
+                                    const isFavorite = isProductInFavorites(product._id);
+
+                                    if (isFavorite) {
+                                        handleRemoveItem(product);
+                                    } else {
+                                        handleAddToFavorites(product._id);
+                                    }
+                                }}
+                                className="fa-solid fa-heart"></i>
                         </div>
                         <div className="cart-section p-img-container">
-                            <img className="p-img" src={`${product.ImageURL}`} />
+                            <img className="p-img" src={`${product.ImageURL}`} alt={product.Name} />
                         </div>
                         <div className="p-details">
                             <div className="cart-section name-fav">

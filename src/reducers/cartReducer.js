@@ -49,7 +49,6 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-
             };
         case 'FETCH_USER_CART_REQUEST':
             return {

@@ -3,14 +3,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, clearError } from '../../actions/authActions';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { ThemeContext } from '../../Context';
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const dispatch = useDispatch();
     const { theme } = useContext(ThemeContext);
     const [credentials, setCredentials] = useState({ Email: '', Password: '' });
     const error = useSelector((state) => state.auth.error);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
     const handleInputChange = (e) => {
         setCredentials({
@@ -31,6 +33,10 @@ const Login = () => {
         e.preventDefault();
         dispatch(login(credentials));
     };
+    
+    if (isAuthenticated) {
+        return <Navigate to="/catalog" />;
+    }
 
     return (
         <div className={`login-container ${theme ? 'dark-background' : 'light-backrgound'}`}>

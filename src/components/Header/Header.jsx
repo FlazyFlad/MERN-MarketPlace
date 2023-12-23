@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ThemeContext } from '../../Context';
 import './Header.css'
+import Cookies from 'js-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/authActions';
 
 const Header = () => {
     const { theme, handleChangeTheme } = useContext(ThemeContext);
+    const token = useSelector(state => state.auth.token);
+    const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout()).then(() => {
+            navigate('/');
+        });
+    };
 
     return (
         <>
@@ -28,15 +40,24 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                            <Link to="/services" className={`${theme ? 'dark-text' : 'light-text'}`}>
                                 Services
                             </Link>
                         </li>
-                        <li>
-                            <Link to="/register" className={`${theme ? 'dark-text' : 'light-text'}`}>
-                                Sign up
-                            </Link>
-                        </li>
+                        {token ? (
+                            <li>
+                                <Link onClick={() => handleLogout()} className={`${theme ? 'dark-text' : 'light-text'}`}>
+                                    Log Out
+                                </Link>
+                            </li>
+                        ) : (
+                            <li>
+                                <Link to="/register" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                                    Sign Up
+                                </Link>
+                            </li>
+                        )}
+
                         <li>
                             {!theme && (
                                 <i className="fa fa-moon-o theme-icon" onClick={handleChangeTheme} aria-hidden="true"></i>

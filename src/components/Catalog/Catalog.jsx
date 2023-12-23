@@ -7,6 +7,7 @@ import './Catalog.css';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { fetchProducts } from '../../actions/productActions';
+import { toggleFavoriteNav } from '../../actions/favoriteActions';
 
 const Catalog = () => {
     const { theme } = useContext(ThemeContext);
@@ -15,6 +16,7 @@ const Catalog = () => {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
     const isLoadingCart = useSelector((state) => state.cart.isLoadingCart);
+    const favoriteItems = useSelector((state) => (state.favorite.favoriteItems))
     const [isLoading, setIsLoading] = useState(true);
     const [sortBy, setSortBy] = useState('');
 
@@ -24,6 +26,10 @@ const Catalog = () => {
 
     const handleToggleCartNav = () => {
         dispatch(toggleCartNav());
+    };
+
+    const handleToggleFavoritNav = () => {
+        dispatch(toggleFavoriteNav());
     };
 
     const priceValues = products?.map((product) => product?.Price).filter((value) => !isNaN(value)) || [];
@@ -106,7 +112,7 @@ const Catalog = () => {
         pageNumbers.push(i);
     }
 
-    const calculateTotalQuantity = () => {
+    const calculateTotalCartQuantity = () => {
         let totalQuantity = 0;
 
         cartItems.forEach((cartItem) => {
@@ -116,8 +122,7 @@ const Catalog = () => {
         return totalQuantity;
     };
 
-    const totalQuantity = calculateTotalQuantity();
-
+    const totalCartQuantity = calculateTotalCartQuantity();
 
     return (
         <>
@@ -140,15 +145,15 @@ const Catalog = () => {
 
                         <div className="right-icons">
                             <div className="s-nav" style={{ marginRight: "5px" }}>
-                                <i onClick={(handleToggleCartNav)} className={`s-icon fas fa-heart`}></i>
-                                {totalQuantity > 0 &&
-                                    <span className="s-total-qty">{totalQuantity ? totalQuantity : ''}</span>
+                                <i onClick={(handleToggleFavoritNav)} className={`s-icon fas fa-heart`}></i>
+                                {favoriteItems.length > 0 &&
+                                    <span className="s-total-qty">{favoriteItems.length ? favoriteItems.length : ''}</span>
                                 }
                             </div>
                             <div className="s-nav">
                                 <i onClick={(handleToggleCartNav)} className="s-icon fas fa-shopping-cart"></i>
-                                {totalQuantity > 0 &&
-                                    <span className="s-total-qty">{totalQuantity ? totalQuantity : ''}</span>
+                                {totalCartQuantity > 0 &&
+                                    <span className="s-total-qty">{totalCartQuantity ? totalCartQuantity : ''}</span>
                                 }
                             </div>
                         </div>

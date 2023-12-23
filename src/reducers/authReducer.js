@@ -1,6 +1,8 @@
+import Cookies from "js-cookie";
+
 const initialState = {
     isAuthenticated: false,
-    token: null,
+    token: Cookies.get('token_data') || null,
     error: null,
     userInfo: null,
 };
@@ -10,7 +12,7 @@ const authReducer = (state = initialState, action) => {
         case 'REGISTER_SUCCESS':
             return {
                 ...state,
-                isAuthenticated: true,
+                // isAuthenticated: true,
                 error: null,
             };
         case 'REGISTER_FAILURE':
@@ -24,6 +26,13 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isAuthenticated: true,
                 token: action.payload,
+                error: null,
+            };
+        case 'LOGOUT_SUCCESS':
+            return {
+                ...state,
+                isAuthenticated: false,
+                token: null,
                 error: null,
             };
         case 'LOGIN_FAILURE':
@@ -49,7 +58,6 @@ const authReducer = (state = initialState, action) => {
                 userInfo: action.payload,
                 error: null,
             };
-
         case 'GET_USER_INFO_FAILURE':
             return {
                 ...state,

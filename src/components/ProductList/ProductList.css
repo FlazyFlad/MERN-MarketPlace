@@ -44,6 +44,10 @@
   transform: translateY(0);
 }
 
+.in-favorites {
+  color: red;
+}
+
 .pagination-section {
   display: flex;
   justify-content: center;

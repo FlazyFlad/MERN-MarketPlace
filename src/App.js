@@ -11,6 +11,8 @@ import Login from './components/Login/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthModal from './components/AuthModal/AuthModal';
 import Cookies from 'js-cookie';
+import HeroSection from './components/HeroSection/HeroSection';
+import AboutUs from './components/AboutUs/AboutUs';
 
 function App() {
   const [theme, setTheme] = useState(true);
@@ -49,6 +51,7 @@ function App() {
             <Routes>
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/" element={<HeroSection />} />
               <Route path="/login" element={<Login />} />
               <Route path="/catalog" element={<Catalog />} />
             </Routes>

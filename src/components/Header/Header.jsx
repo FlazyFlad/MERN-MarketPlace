@@ -23,7 +23,7 @@ const Header = () => {
         <>
             <header className={`header-section ${theme ? 'dark-section' : 'light-section'}`}>
                 <nav>
-                    <h1>
+                    <h1 style={{ marginLeft: '5%' }}>
                         <Link to="/" className={`${theme ? 'dark-text' : 'light-text'}`}>
                             <i className="fa fa-shopping-cart" aria-hidden="true"></i>MarketPlace
                         </Link>
@@ -40,8 +40,8 @@ const Header = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/services" className={`${theme ? 'dark-text' : 'light-text'}`}>
-                                Services
+                            <Link to="/about-us" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                                About Us
                             </Link>
                         </li>
                         {token ? (

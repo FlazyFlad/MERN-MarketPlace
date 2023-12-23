@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 body{
   margin: 0;
   padding: 0;
@@ -6,49 +6,50 @@ body{
 }
 
 .app-spacer {
-  min-height: 88.8vh;
+  min-height: 92vh;
 }
 
 /* Themes start */
 
 .dark-section {
-  background-color: #000000; /* Цвет фона темных секций */
-  color: #fff; /* Цвет текста в темных секциях */
+  background-color: #0b0b0b;
+  color: #fff;
 }
 
 .dark-background {
-  background-color: #181818; /* Цвет заднего фона в темной теме */
-  color: #fff; /* Цвет текста на темном заднем фоне */
+  background-color: #181818;
+  color: #fff;
 }
 
 .dark-text {
-  color: white; /* Цвет текста в темных секциях */
+  color: white;
 }
 
 .light-section {
-  background-color: #fff; /* Цвет фона светлых секций */
-  color: #000000; /* Цвет текста в светлых секциях */
+  background-color: #fff;
+  color: #000000;
 }
 
 .light-background {
-  background-color: #f4f4f4; /* Цвет заднего фона в светлой теме */
-  color: #000000; /* Цвет текста на светлом заднем фоне */
+  background-color: #f4f4f4;
+  color: #000000;
 }
 
 .light-text {
-  color: #141414; /* Цвет текста в светлых секциях */
+  color: #141414;
 }
 
-/* Style for autofill */
+
+
 .dark-background:-webkit-autofill,
 .light-background:-webkit-autofill {
-  box-shadow: 0 0 0 30px #181818 inset; /* Adjust the color and inset shadow for dark theme */
-  -webkit-text-fill-color: #fff; /* Set text color for autofill in dark theme */
+  box-shadow: 0 0 0 30px #181818 inset; 
+  -webkit-text-fill-color: #fff;
 }
 
 .light-background:-webkit-autofill {
-  box-shadow: 0 0 0 30px #f4f4f4 inset; /* Adjust the color and inset shadow for light theme */
-  -webkit-text-fill-color: #000; /* Set text color for autofill in light theme */
+  box-shadow: 0 0 0 30px #f4f4f4 inset;
+  -webkit-text-fill-color: #000;
 }
 
 /* Themes end */

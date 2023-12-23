@@ -1,0 +1,115 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Hero Section Styles */
+.hero {
+    text-align: center;
+    padding: 80px 0;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.primary-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #fff;
+    background-color: #3498db;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+/* Product Carousel Styles */
+.product-carousel {
+    padding: 60px 0;
+}
+
+.dark-hero-section {
+    background-color: #000;
+}
+
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
+
+.product-card {
+    flex: 0 0 300px;
+    margin-right: 20px;
+    scroll-snap-align: start;
+}
+
+.product-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.product-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.product-description {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.secondary-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    color: #3498db;
+    background-color: #fff;
+    text-decoration: none;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+}
+
+.hero-button {
+    font-size: 19px;
+    font-weight: 500;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    cursor: pointer;
+    padding: 10px 30px;
+    transition: all 0.3s ease;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2em;
+    }
+
+    .hero-subtitle {
+        font-size: 1em;
+    }
+
+    .product-card {
+        flex: 0 0 100%;
+        margin-right: 0;
+    }
+}

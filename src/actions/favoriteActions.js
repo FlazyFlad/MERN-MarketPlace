@@ -22,7 +22,6 @@ export const handleErrorValue = () => ({
     type: 'HANDLE_ERROR_VALUE',
 });
 
-
 const baseUrl = process.env.REACT_APP_API_URL;
 // const baseUrl = 'http://127.0.0.1:3001';
 

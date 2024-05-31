@@ -7,7 +7,7 @@ const Total = ({ totalQty, totalCartPrice }) => {
 
   return (
     <>
-      <strong className={`cart-all ${theme ? 'dark-text' : 'dark-text'}`}>
+      <strong className={`cart-all ${theme === "dark" ? 'dark-text' : 'dark-text'}`}>
         Total: ₸ <span className='total cart-all'>{totalCartPrice}</span>.00/-
       </strong>
     </>

@@ -11,11 +11,16 @@ import Login from './components/Login/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthModal from './components/AuthModal/AuthModal';
 import Cookies from 'js-cookie';
-import HeroSection from './components/HeroSection/HeroSection';
 import AboutUs from './components/AboutUs/AboutUs';
+import MainPage from './components/Main/Main';
+import Navbar from './components/Navbar/Navbar';
+import About from './components/AboutUs/AboutUs';
 
 function App() {
-  const [theme, setTheme] = useState(true);
+  const [theme, setTheme] = React.useState(localStorage.getItem("theme")
+    ? localStorage.getItem("theme") : "light"
+  );
+
   const isCartNavOpen = useSelector((state) => state.cart.isCartNavOpen);
   const isOrderOpen = useSelector((state) => state.cart.isOrderOpen);
   const isOrderDetailsOpen = useSelector((state) => (state.cart.isOrderDetailsOpen));
@@ -29,9 +34,23 @@ function App() {
     return isAuthenticated ? children : <Navigate to="/login" state={{ from: location }} />;
   };
 
+  const element = document.documentElement; // access to html
+
   const handleChangeTheme = () => {
-    setTheme(prevTheme => !prevTheme);
+    setTheme(theme === "dark" ? "light" : "dark");
   };
+
+  React.useEffect(() => {
+    localStorage.setItem("theme", theme);
+    if (theme === "dark") {
+      element.classList.add("dark");
+      element.classList.add("dark");
+    } else {
+      element.classList.remove("light");
+      element.classList.remove("dark");
+    }
+  });
+
 
   const isAuthenticated = useSelector((state) => (state.auth.isAuthenticated))
 
@@ -44,16 +63,18 @@ function App() {
 
       <div className={`${isCartNavOpen | isOrderOpen | isOrderDetailsOpen | isOrderSuccessOpen | isFavoriteNavOpen ? 'cover' : ''}`}></div>
       <ThemeContext.Provider value={{ theme, handleChangeTheme }}>
-        <div className={`app-container ${theme ? 'dark-background' : 'light-background'}`}>
-          <Header />
+        <div className={`app-container ${theme === "dark" ? 'dark-background' : 'light-background'}`}>
+          <Navbar />
+
           <AuthModal />
-          <div className={`app-spacer ${theme ? 'dark-background' : 'light-background'} overlay ${isCartNavOpen ? 'open' : ''}`} style={{ display: 'block' }}>
+          <div className={`app-spacer ${theme === "dark" ? 'dark-background' : 'light-background'} overlay ${isCartNavOpen ? 'open' : ''}`} style={{ display: 'block' }}>
             <Routes>
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/" element={<HeroSection />} />
+              <Route path="/" element={<MainPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/catalog" element={<Catalog />} />
+              <Route path="/about-us" element={<About />} />
             </Routes>
           </div>
         </div>

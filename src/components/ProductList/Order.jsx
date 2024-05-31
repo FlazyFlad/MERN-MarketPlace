@@ -45,7 +45,7 @@ const Order = ({ totalCartPrice }) => {
         <>
             {isOrderOpen | isOrderDetailsOpen | isOrderSuccessOpen ? (
                 <>
-                    <div className={`cart-section invoice ${theme ? 'dark-text' : 'dark-text'}`} style={invoiceStyle}>
+                    <div className={`cart-section invoice ${theme === "dark" ? "dark-cart-section" : "light-section"}`} style={invoiceStyle}>
                         {isOrderOpen && (
                             <>
                                 {cartItems?.map((cartItem) => (
@@ -62,8 +62,8 @@ const Order = ({ totalCartPrice }) => {
                                     </div>
                                 </div>
                                 <div className="cart-section order">
-                                    <button onClick={(handleToggleOrderDetails)} className="btn-order btn">Order Now</button>
-                                    <button onClick={(handleToggleCartNav)} className="btn-cancel btn">Cancel</button>
+                                    <button onClick={(handleToggleOrderDetails)} className={`btn-order btn ${theme === "dark" ? 'dark-text' : 'dark-text'}`}>Order Now</button>
+                                    <button onClick={(handleToggleCartNav)} className={`btn-cancel btn ${theme === "dark" ? 'dark-text' : 'dark-text'}`}>Cancel</button>
                                 </div>
                             </>
                         )}

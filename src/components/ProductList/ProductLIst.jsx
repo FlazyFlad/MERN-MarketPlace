@@ -122,7 +122,7 @@ const ProductList = ({ currentProducts }) => {
                 </div>
 
                 {currentProducts.map((product) => (
-                    <div key={product._id} className={`product p-card rounded-2xl ${theme ? "dark-section " : "light-section"}`}>
+                    <div key={product._id} className={`product p-card rounded-2xl ${theme === "dark" ? "dark-section " : "light-section"}`}>
                         <div className={`heart-icon ${isProductInFavorites(product._id) ? 'in-favorites' : ''}`}>
                             <i
                                 onClick={() => {
@@ -147,7 +147,7 @@ const ProductList = ({ currentProducts }) => {
                                 <p className="cart-all product-price">{product.Price} ₸</p>
                                 <span className="cart-all btn-add">
                                     <div className="cart-section">
-                                        <button onClick={() => handleAddToCart(product._id)} className={`cart-all ${theme ? "add-btn-dark" : "add-btn-light"}`}>Add <i className="fas fa-chevron-right"></i></button>
+                                        <button onClick={() => handleAddToCart(product._id)} className={`cart-all ${theme === "dark" ? "add-btn-dark" : "add-btn-light"}`}>Add <i className="fas fa-chevron-right"></i></button>
                                     </div>
                                 </span>
                             </div>

@@ -1,10 +1,12 @@
-/* Add these styles to your CSS file */
-
 .content-section {
     display: flex;
     flex-wrap: wrap;
     width: 80%;
     margin: 0 auto;
+}
+
+.catalog-container {
+    min-height: 100vh;
 }
 
 .products-list {

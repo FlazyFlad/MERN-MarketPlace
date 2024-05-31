@@ -39,8 +39,8 @@ const Login = () => {
     }
 
     return (
-        <div className={`login-container ${theme ? 'dark-background' : 'light-backrgound'}`}>
-            <div className={`form-container ${theme ? 'dark-section' : 'light-section'}`}>
+        <div className={`login-container ${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}>
+            <div className={`form-container ${theme === "dark" ? 'dark-section' : 'light-section'}`}>
                 <h2 className="auth-title">Login to MarketPlace</h2> <br />
 
                 {error && JSON.stringify(error).length < 50 && (
@@ -62,7 +62,7 @@ const Login = () => {
                     <input
                         type="email"
                         name="Email"
-                        className={`${theme ? 'dark-background' : 'light-backrgound'}`}
+                        className={`${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}
                         placeholder="Email"
                         value={credentials.Email}
                         onChange={handleInputChange}
@@ -71,7 +71,7 @@ const Login = () => {
                     
                     <label> Password</label>
                     <input
-                        className={`${theme ? 'dark-background' : 'light-backrgound'}`}
+                        className={`${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}
                         type="password"
                         name="Password"
                         placeholder="Password"

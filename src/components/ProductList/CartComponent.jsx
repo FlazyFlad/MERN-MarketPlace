@@ -46,11 +46,11 @@ const CartComponent = ({ cartItems, totalCartPrice }) => {
 
     return (
         <div className="cart">
-            <div className={`cart-section side-nav`} style={openingCart}>
+            <div className={`cart-section side-nav ${theme === "dark" ? "dark-cart-section" : "light-section"}`} style={openingCart}>
                 <button className="cart-section" onClick={() => dispatch(toggleCartNav())}>
-                    <i className={`fas fa-times ${theme ? 'dark-text' : 'dark-text'}`}></i>
+                    <i className={`fas fa-times`}></i>
                 </button>
-                <h2 className={`cart-all ${theme ? 'dark-text' : 'dark-text'}`}>Cart</h2>
+                <h2 className={`cart-all`}>Cart</h2>
                 {cartItems?.length > 0 ? (
                     <div className="cart-section cart-items">
                         <CartItem
@@ -60,15 +60,25 @@ const CartComponent = ({ cartItems, totalCartPrice }) => {
                         />
                     </div>
                 ) : (
-                    <span class="empty-cart">Looks Like You Haven't Added Any Product In The Cart</span>
+                    <span class="empty-cart"
+                        style={{
+                            color: theme === 'dark' ? 'rgba(255, 255, 255, 0.25)' : 'rgba(0, 0, 0, 0.25)',
+                        }}
+                    >Looks Like You Haven't Added Any Product In The Cart</span>
                 )}
                 <div className="cart-section cart-section final">
                     <Total totalCartPrice={totalCartPrice} />
                     <div className="cart-section action">
-                        <button onClick={() => handleToggleOrderNow()} className={`btn buy ${theme ? 'dark-text' : 'dark-text'}`}>
+                        <button style={{
+                            border: theme === 'dark' ? '1px solid white' : '1px solid #010101',
+                        }} onClick={() => handleToggleOrderNow()} className={`btn buy`}>
                             Purchase <i className="fas fa-credit-card" style={{ color: "#6665dd" }}></i>
                         </button>
-                        <button onClick={() => handleClearCart()} className={`btn clear ${theme ? 'dark-text' : 'dark-text'}`}>
+                        <button
+                            style={{
+                                border: theme === 'dark' ? '1px solid white' : '1px solid #010101',
+                            }}
+                            onClick={() => handleClearCart()} className={`btn clear`}>
                             Clear Cart <i className="fas fa-trash" style={{ color: "#bb342f" }}></i>
                         </button>
                     </div>

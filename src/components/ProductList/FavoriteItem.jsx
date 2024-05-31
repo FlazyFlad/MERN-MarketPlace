@@ -3,12 +3,16 @@ import { ThemeContext } from '../../Context';
 
 const FavoriteItem = ({ favoriteItems, handleRemoveItem }) => {
 
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
 
     return (
         <div>
             {favoriteItems?.map((favorite) => (
-                <div key={favorite._id} className={`cart-section cart-item ${theme ? 'dark-text' : 'dark-text'}`}>
+                <div key={favorite._id} className={`cart-section cart-item `}
+                    style={{
+                        borderBottom: theme === 'dark' ? '1px solid whitesmoke' : '1px solid #333',
+                    }}
+                >
                     <div className='cart-section cart-img'>
                         <img src={favorite.ProductID?.ImageURL} alt={favorite.ProductID?.Name} />
                     </div>

@@ -3,12 +3,15 @@ import { ThemeContext } from '../../Context';
 
 const CartItem = ({ cartItems, handleQuantityChange, handleRemoveItem }) => {
 
-    const {theme} = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
 
     return (
         <div>
             {cartItems?.map((cartItem) => (
-                <div key={cartItem._id} className={`cart-section cart-item ${theme ? 'dark-text' : 'dark-text'}`}>
+                <div key={cartItem._id} className={`cart-section cart-item`}
+                    style={{
+                        borderBottom: theme === 'dark' ? '1px solid whitesmoke' : '1px solid #333',
+                    }}>
                     <div className='cart-section cart-img'>
                         <img src={cartItem.ProductID?.ImageURL} alt={cartItem.ProductID?.Name} />
                     </div>

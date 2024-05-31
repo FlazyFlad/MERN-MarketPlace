@@ -18,41 +18,41 @@ const Header = () => {
             navigate('/');
         });
     };
-
+    
     return (
         <>
-            <header className={`header-section ${theme ? 'dark-section' : 'light-section'}`}>
+            <header className={`header-section ${theme === "dark" ? 'dark-section' : 'light-section'}`}>
                 <nav>
                     <h1 style={{ marginLeft: '5%' }}>
-                        <Link to="/" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                        <Link to="/" className={`${theme === "dark" ? 'dark-text' : 'light-text'}`}>
                             <i className="fa fa-shopping-cart" aria-hidden="true"></i>MarketPlace
                         </Link>
                     </h1>
                     <ul>
                         <li>
-                            <Link to="/" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                            <Link to="/" className={`${theme === "dark" ? 'dark-text' : 'light-text'}`}>
                                 Home
                             </Link>
                         </li>
                         <li>
-                            <Link to="/catalog" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                            <Link to="/catalog" className={`${theme === "dark" ? 'dark-text' : 'light-text'}`}>
                                 Catalog
                             </Link>
                         </li>
                         <li>
-                            <Link to="/about-us" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                            <Link to="/about-us" className={`${theme === "dark" ? 'dark-text' : 'light-text'}`}>
                                 About Us
                             </Link>
                         </li>
                         {token ? (
                             <li>
-                                <Link onClick={() => handleLogout()} className={`${theme ? 'dark-text' : 'light-text'}`}>
+                                <Link onClick={() => handleLogout()} className={`${theme === "dark" ? 'dark-text' : 'light-text'}`}>
                                     Log Out
                                 </Link>
                             </li>
                         ) : (
                             <li>
-                                <Link to="/register" className={`${theme ? 'dark-text' : 'light-text'}`}>
+                                <Link to="/register" className={`${theme === "dark" ? 'dark-text' : 'light-text'}`}>
                                     Sign Up
                                 </Link>
                             </li>

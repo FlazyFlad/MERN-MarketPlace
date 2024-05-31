@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import DualSlider from './DualSlider';
-import './FilterSection.css';
+// import './FilterSection.css';
 import { ThemeContext } from '../../Context';
 import { FaSearch } from "react-icons/fa";
 
@@ -80,7 +80,7 @@ const FilterSection = ({ onFilterChange, categoriesData, modelsData, maxPrice, m
   };
 
   return (
-    <div className={`${theme ? 'dark-section' : 'light-section'} p-4 rounded-2xl`}>
+    <div className={`${theme === "dark" ? 'dark-section' : 'light-section'} p-4 rounded-2xl`}>
       <div className="filter-section">
         <h2 className='font-bold text-lg'>Search by Name</h2>
         <div className="flex border-2 items-center rounded-2xl bg-gray-200 w-full">
@@ -124,11 +124,15 @@ const FilterSection = ({ onFilterChange, categoriesData, modelsData, maxPrice, m
         </div>
       </div>
 
-      <div className="combined-button">
-        <button className="reset-button" onClick={handleResetFilters}>
+      <div className="flex justify-between">
+        <button
+          className="bg-gray-500 text-white py-2 px-4 rounded-md"
+          onClick={handleResetFilters}>
           Reset
         </button>
-        <button className="apply-button" onClick={handleApplyFilters}>
+        <button
+          className="bg-blue-500 text-white py-2 px-4 rounded-md"
+          onClick={handleApplyFilters}>
           Apply
         </button>
       </div>

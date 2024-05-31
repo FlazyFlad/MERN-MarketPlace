@@ -5,19 +5,21 @@ body{
   font-family: "Montserrat", sans-serif !important;
 }
 
-.app-spacer {
-  min-height: 92vh;
-}
 
 /* Themes start */
 
 .dark-section {
-  background-color: #0b0b0b;
+  background-color: rgb(6, 12, 27);
   color: #fff;
 }
 
+.dark-cart-section {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 .dark-background {
-  background-color: #181818;
+  background-color: rgb(17 24 39);
   color: #fff;
 }
 
@@ -26,7 +28,7 @@ body{
 }
 
 .light-section {
-  background-color: #fff;
+  background-color: #ffffff;
   color: #000000;
 }
 

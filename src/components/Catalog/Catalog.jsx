@@ -126,72 +126,75 @@ const Catalog = () => {
 
     return (
         <>
-            {!isLoading && !isLoadingCart ? (
-                <>
-                    <div className="icons-section">
-                        <div className="left-icons">
-                            <div className="sorting-dropdown">
-                                <button className="menu-icon">
-                                    <i class="s-icon fa-solid fa-bars"></i>
-                                </button>
-                                <div className={`dropdown-content dropdown-content${theme ? '-dark dark-section' : '-light light-section'}`}>
-                                    <div onClick={() => handleSortChange('descending')}>Descending Price</div>
-                                    <div onClick={() => handleSortChange('ascending')}>Ascending Price</div>
-                                    <div onClick={() => handleSortChange('popularity')}>By Popularity</div>
-                                    <div onClick={() => handleSortChange('relevancy')}>By Relevancy</div>
+            <div className="catalog-container">
+                {!isLoading && !isLoadingCart ? (
+                    <>
+
+                        <div className="icons-section">
+                            <div className="left-icons">
+                                <div className="sorting-dropdown">
+                                    <button className="menu-icon">
+                                        <i className="s-icon fa-solid fa-bars"></i>
+                                    </button>
+                                    <div className={`dropdown-content dropdown-content${theme === "dark" ? '-dark dark-section' : '-light light-section'}`}>
+                                        <div onClick={() => handleSortChange('descending')}>Descending Price</div>
+                                        <div onClick={() => handleSortChange('ascending')}>Ascending Price</div>
+                                        <div onClick={() => handleSortChange('popularity')}>By Popularity</div>
+                                        <div onClick={() => handleSortChange('relevancy')}>By Relevancy</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="right-icons">
+                                <div className="s-nav" style={{ marginRight: "5px" }}>
+                                    <i onClick={(handleToggleFavoritNav)} className={`s-icon fas fa-heart`}></i>
+                                    {favoriteItems.length > 0 &&
+                                        <span className="s-total-qty">{favoriteItems.length ? favoriteItems.length : ''}</span>
+                                    }
+                                </div>
+                                <div className="s-nav">
+                                    <i onClick={(handleToggleCartNav)} className="s-icon fas fa-shopping-cart"></i>
+                                    {totalCartQuantity > 0 &&
+                                        <span className="s-total-qty">{totalCartQuantity ? totalCartQuantity : ''}</span>
+                                    }
                                 </div>
                             </div>
                         </div>
+                        <div className="content-section">
+                            <ProductList currentProducts={currentProducts} currentPage={currentPage} itemsPerPage={itemsPerPage} setCurrentPage={setCurrentPage} />
 
-                        <div className="right-icons">
-                            <div className="s-nav" style={{ marginRight: "5px" }}>
-                                <i onClick={(handleToggleFavoritNav)} className={`s-icon fas fa-heart`}></i>
-                                {favoriteItems.length > 0 &&
-                                    <span className="s-total-qty">{favoriteItems.length ? favoriteItems.length : ''}</span>
-                                }
-                            </div>
-                            <div className="s-nav">
-                                <i onClick={(handleToggleCartNav)} className="s-icon fas fa-shopping-cart"></i>
-                                {totalCartQuantity > 0 &&
-                                    <span className="s-total-qty">{totalCartQuantity ? totalCartQuantity : ''}</span>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="content-section">
-                        <ProductList currentProducts={currentProducts} currentPage={currentPage} itemsPerPage={itemsPerPage} setCurrentPage={setCurrentPage} />
-
-                        <div className="filtering-section">
-                            <div>
-                                <FilterSection
-                                    onFilterChange={handleFilterChange}
-                                    categoriesData={[...new Set(products?.map((product) => product?.CategoryID?.Name))]}
-                                    modelsData={[...new Set(products?.map((product) => product?.ModelID?.Name))]}
-                                    maxPrice={maxPrice}
-                                    minPrice={minPrice}
-                                    onFilterPageChange={handleFilterPageChange}
-                                />
+                            <div className="filtering-section">
+                                <div>
+                                    <FilterSection
+                                        onFilterChange={handleFilterChange}
+                                        categoriesData={[...new Set(products?.map((product) => product?.CategoryID?.Name))]}
+                                        modelsData={[...new Set(products?.map((product) => product?.ModelID?.Name))]}
+                                        maxPrice={maxPrice}
+                                        minPrice={minPrice}
+                                        onFilterPageChange={handleFilterPageChange}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {!isCartNavOpen &&
-                        < div className="pagination-section">
-                            {pageNumbers.map(number => (
-                                <button
-                                    key={number}
-                                    onClick={() => paginate(number)}
-                                    className={`pagination-button ${currentPage === number ? 'active' : ''}`}
-                                >
-                                    {number}
-                                </button>
-                            ))}
-                        </div>
-                    }
-                </>
-            ) : (
-                <LoadingSpinner />
-            )
-            }
+                        {!isCartNavOpen &&
+                            < div className="pagination-section">
+                                {pageNumbers.map(number => (
+                                    <button
+                                        key={number}
+                                        onClick={() => paginate(number)}
+                                        className={`pagination-button ${currentPage === number ? 'active' : ''}`}
+                                    >
+                                        {number}
+                                    </button>
+                                ))}
+                            </div>
+                        }
+                    </>
+                ) : (
+                    <LoadingSpinner />
+                )
+                }
+            </div>
         </>
     )
 }

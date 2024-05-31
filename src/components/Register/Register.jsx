@@ -32,8 +32,8 @@ const Register = () => {
     };
 
     return (
-        <div className={`register-container ${theme ? 'dark-theme' : 'light-theme'}`}>
-            <div className={`form-container ${theme ? 'dark-section' : 'light-section'}`}>
+        <div className={`register-container ${theme === "dark" ? 'dark-theme' : 'light-theme'}`}>
+            <div className={`form-container ${theme === "dark" ? 'dark-section' : 'light-section'}`}>
                 <h2 className="auth-title">Register to MarketPlace</h2> <br />
 
                 {error && (
@@ -54,7 +54,7 @@ const Register = () => {
                     <input
                         type="email"
                         name="Email"
-                        className={`${theme ? 'dark-background' : 'light-backrgound'}`}
+                        className={`${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}
                         placeholder="Email"
                         value={userData.Email}
                         onChange={handleInputChange}
@@ -63,7 +63,7 @@ const Register = () => {
 
                     <label>Password</label>
                     <input
-                        className={`${theme ? 'dark-background' : 'light-backrgound'}`}
+                        className={`${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}
                         type="password"
                         name="Password"
                         placeholder="Password"
@@ -74,7 +74,7 @@ const Register = () => {
 
                     <label>Repeat Password</label>
                     <input
-                        className={`${theme ? 'dark-background' : 'light-backrgound'}`}
+                        className={`${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}
                         type="password"
                         name="Repassword"
                         placeholder="Repeat Password"
@@ -85,7 +85,7 @@ const Register = () => {
 
                     <label>Username</label>
                     <input
-                        className={`${theme ? 'dark-background' : 'light-backrgound'}`}
+                        className={`${theme === "dark" ? 'dark-background' : 'light-backrgound'}`}
                         type="text"
                         name="Username"
                         placeholder="Username"
